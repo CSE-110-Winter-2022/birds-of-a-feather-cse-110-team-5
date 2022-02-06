@@ -3,11 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Maxim/AndroidStudioProjects/birds-of-a-feather-cse-110-team-5/app/src/main/res/layout/activity_class_entry.xml" value="0.5546875" />
-        <entry key="..\:/Users/Maxim/AndroidStudioProjects/birds-of-a-feather-cse-110-team-5/app/src/main/res/layout/activity_class_input.xml" value="0.5546875" />
-        <entry key="..\:/Users/Maxim/AndroidStudioProjects/birds-of-a-feather-cse-110-team-5/app/src/main/res/layout/activity_main.xml" value="0.5546875" />
-        <entry key="..\:/Users/Maxim/AndroidStudioProjects/birds-of-a-feather-cse-110-team-5/app/src/main/res/layout/activity_photo.xml" value="0.5546875" />
-        <entry key="..\:/Users/Maxim/AndroidStudioProjects/birds-of-a-feather-cse-110-team-5/app/src/main/res/layout/activity_username.xml" value="0.5546875" />
+        <entry key="..\:/Users/matthew/AndroidStudioProjects/birds-of-a-feather-cse-110-team-5/app/src/main/res/layout/activity_class_input.xml" value="0.5" />
       </map>
     </option>
   </component>
