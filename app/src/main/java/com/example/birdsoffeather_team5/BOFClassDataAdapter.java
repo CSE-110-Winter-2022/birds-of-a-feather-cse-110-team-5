@@ -1,5 +1,6 @@
 package com.example.birdsoffeather_team5;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class BOFClassDataAdapter extends RecyclerView.Adapter<BOFClassDataAdapter.ViewHolder> {
-    private List<BOFClassData> classes;
+    private final List<BOFClassData> classes;
 
     public BOFClassDataAdapter(List<BOFClassData> classes){
         super();
@@ -42,6 +43,7 @@ public class BOFClassDataAdapter extends RecyclerView.Adapter<BOFClassDataAdapte
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
+
         private final TextView class_row;
         private BOFClassData classData;
 
@@ -52,6 +54,7 @@ public class BOFClassDataAdapter extends RecyclerView.Adapter<BOFClassDataAdapte
 
         public void setClass_row(BOFClassData classData){
             this.classData = classData;
+            //this.class_row.setText("temp");
             this.class_row.setText(classData.getCourseNum() + ", " + classData.getSubject() + ", " + classData.getSession() + ", " + classData.getYear());
         }
     }
