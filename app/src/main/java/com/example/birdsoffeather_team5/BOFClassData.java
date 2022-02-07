@@ -32,7 +32,7 @@ public class BOFClassData implements ClassData{
      */
     public boolean equals(ClassData c1, ClassData c2) {
         return c1 != null && c2 != null && c1.getYear() == c2.getYear()
-        && c1.getSession() == c2.getSession() && c1.getSubject().equals(c2.getSubject())
+        && c1.getSession().equals(c2.getSession()) && c1.getSubject().equals(c2.getSubject())
         && c1.getCourseNum().equals(c2.getCourseNum());
     }
 }
