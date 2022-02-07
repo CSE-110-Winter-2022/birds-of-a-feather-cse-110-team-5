@@ -94,48 +94,41 @@ public class ClassInputActivity extends AppCompatActivity {
         //get the year
         TextView yearView = findViewById(R.id.year_input);
         String yearText = yearView.getText().toString();
-        /*
         Optional<Integer> maybeYear = parseCount(yearText);
         if(!maybeYear.isPresent()) {
             //add alert
             return;
         }
-        int year = maybeYear.get();
-        */
         int year = Integer.parseInt(yearText);
-        /*
         if(!isValidYear(year)) {
             //add alert
             return;
         }
-*/
+
         //get session?
         Spinner sessionView = findViewById(R.id.session_spinner);
         String session = sessionView.getSelectedItem().toString();
-        /*
         if(!isValidSession(session)) {
             //alert
             return;
         }
-*/
+
         //get subject
         TextView subjectView = findViewById(R.id.subject_input);
         String subject = subjectView.getText().toString();
-        /*
         if(!isValidSubject(subject)) {
             //alert
             return;
         }
-*/
+
         //get course number
         TextView cnView = findViewById(R.id.course_number_input);
         String courseNum = cnView.getText().toString();
-        /*
         if(!isValidCourseNum(courseNum)) {
             //alert
             return;
         }
-*/
+
         BOFClassData newClassData = new BOFClassData(year, session, subject, courseNum);
 
         //need to use ClassDataAdapter add method
