@@ -3,10 +3,13 @@ package com.example.birdsoffeather_team5;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 public class ClassInputActivity extends AppCompatActivity {
@@ -35,7 +38,7 @@ public class ClassInputActivity extends AppCompatActivity {
     }
 
     // returns true if all parameters are valid for class data
-    private boolean isValidClass(int year, Session session, String subject, String courseNum){
+    private boolean isValidClass(int year, String session, String subject, String courseNum){
         return isValidYear(year) &&
                 isValidSession(session) &&
                 isValidSubject(subject) &&
@@ -49,7 +52,7 @@ public class ClassInputActivity extends AppCompatActivity {
     }
 
     // returns true if session is valid (session is chosen from a dropdown, so any non-null value is valid)
-    private boolean isValidSession(Session session){
+    private boolean isValidSession(String session){
         return session != null;
     }
 
@@ -63,5 +66,58 @@ public class ClassInputActivity extends AppCompatActivity {
     private boolean isValidCourseNum(String courseNum){
         return courseNum != null &&
                 Pattern.matches("\\d{1,3}[A-Z]{0,3}", courseNum);
+    }
+
+    public void onEnterButtonClicked(View view) {
+        //get the year
+        TextView yearView = findViewById(R.id.year_input);
+        String yearText = yearView.getText().toString();
+        Optional<Integer> maybeYear = parseCount(yearText);
+        if(!maybeYear.isPresent()) {
+            //add alert
+            return;
+        }
+        int year = maybeYear.get();
+        if(!isValidYear(year)) {
+            //add alert
+            return;
+        }
+
+        //get session?
+        Spinner sessionView = findViewById(R.id.session_spinner);
+        String session = sessionView.getSelectedItem().toString();
+        if(!isValidSession(session)) {
+            //alert
+            return;
+        }
+
+        //get subject
+        TextView subjectView = findViewById(R.id.subject_input);
+        String subject = subjectView.getText().toString();
+        if(!isValidSubject(subject)) {
+            //alert
+            return;
+        }
+
+        //get course number
+        TextView cnView = findViewById(R.id.course_number_input);
+        String courseNum = cnView.getText().toString();
+        if(!isValidCourseNum(courseNum)) {
+            //alert
+            return;
+        }
+
+        ClassData newClassData = new BOFClassData(year, session, subject, courseNum);
+        //need to use ClassDataAdapter add method
+    }
+
+    //add to a utilities class
+    public static Optional<Integer> parseCount(String str) {
+        try {
+            int maxCount = Integer.parseInt(str);
+            return Optional.of(maxCount);
+        } catch (NumberFormatException e) {
+            return Optional.empty();
+        }
     }
 }
