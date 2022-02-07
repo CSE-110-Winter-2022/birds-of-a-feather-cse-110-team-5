@@ -52,7 +52,7 @@ public class BOFClassDataAdapter extends RecyclerView.Adapter<BOFClassDataAdapte
 
         public void setClass_row(BOFClassData classData){
             this.classData = classData;
-            this.class_row.setText(classData.getCourseNum() + ", " + classData.getSubject() + ", " + /*classData.getSession() */ ", " + classData.getYear());
+            this.class_row.setText(classData.getCourseNum() + ", " + classData.getSubject() + ", " + classData.getSession() + ", " + classData.getYear());
         }
     }
 
