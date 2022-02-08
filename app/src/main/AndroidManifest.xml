@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BirdsOfFeather_Team5">
         <activity
-            android:name=".MainActivity"
+            android:name=".ClassInputActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
