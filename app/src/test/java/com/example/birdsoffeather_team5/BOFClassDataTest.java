@@ -48,9 +48,15 @@ public class BOFClassDataTest extends TestCase {
         assertEquals("2", classData.getCourseNum());
     }
 
-//    public void testTestEquals() {
-//        ClassData classData1 = new BOFClassData(1, "1", "1", "1");
-//        ClassData classData2 = new BOFClassData(1, "1", "1", "1");
-//        assertEquals(true, classData1 == classData2);
-//    }
+    public void testEquals() {
+        ClassData classData1 = new BOFClassData(1, "1", "1", "1");
+        ClassData classData2 = new BOFClassData(1, "1", "1", "1");
+        assertEquals(true, classData1.equals(classData2));
+    }
+
+    public void testNotEqual() {
+        ClassData classData1 = new BOFClassData(1, "1", "1", "1");
+        ClassData classData2 = new BOFClassData(2, "2", "2", "2");
+        assertFalse(classData1.equals(classData2));
+    }
 }
