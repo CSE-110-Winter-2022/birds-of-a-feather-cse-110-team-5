@@ -4,4 +4,6 @@ import java.util.List;
 
 public interface SharedClasses {
     public List<ClassData> getSharedClasses();
+    public Student getMainStudent();
+    public Student getOtherStudent();
 }
