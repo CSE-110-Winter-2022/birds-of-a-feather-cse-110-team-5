@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -21,6 +22,7 @@ public class ProfileViewActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.i("ProfileViewActivity", "ProfileViewActivity created");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_view);
@@ -38,25 +40,6 @@ public class ProfileViewActivity extends AppCompatActivity {
         List<ClassData> userStudentClasses = BOFStudent.decodeClassData(userClassesString);
 
         List<ClassData> sc = BOFSharedClasses.findSharedClasses(userStudentClasses, otherStudentClasses);
-
-        //?? how to get sharedclasses?
-        /*<ClassData> l1 = new ArrayList<ClassData>();
-        List<ClassData> l2 = new ArrayList<ClassData>();
-        ClassData c1 = new BOFClassData(2022,"WI","CSE","110");
-        l1.add(c1);
-        l2.add(c1);
-        ClassData c2 = new BOFClassData(2021,"FA","CSE","105");
-        l1.add(c2);
-        l2.add(c2);
-        ClassData c3 = new BOFClassData(2020,"SP","MATH","20A");
-        l1.add(c3);
-        ClassData c4 = new BOFClassData(2021,"SP","MATH","20A");
-        l2.add(c4);
-
-        Student s1 = new BOFStudent("s1","a",l1);
-        Student s2 = new BOFStudent("s2","b",l2);
-
-        SharedClasses sc = new BOFSharedClasses(s1,s2);*/
 
         //change sharedclass data to be a list of BOFclassdata instead of list of classdata
         List<BOFClassData> bcd = new ArrayList<BOFClassData>();
@@ -76,6 +59,7 @@ public class ProfileViewActivity extends AppCompatActivity {
     }
 
     public void onGoBackClicked(View view) {
+        Log.i("ProfileViewActivity", "ProfileViewActivity closing");
         finish();
     }
 }

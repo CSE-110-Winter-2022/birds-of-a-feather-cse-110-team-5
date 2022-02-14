@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.i("MainActivity", "MainActivity created");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         SharedPreferences mainStudent = getSharedPreferences("mainStudent", MODE_PRIVATE);
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onEnterButtonClicked(View view) {
+        Log.i("MainActivity", "Query started");
         ClassData c1 = new BOFClassData(2022, "FA", "CSE", "110");
         ClassData c2 = new BOFClassData(2020, "SP", "POLI", "28");
         ClassData c3 = new BOFClassData(2021, "WI", "CSE", "120");

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -12,11 +13,13 @@ public class UsernameActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.i("UsernameActivity", "UsernameActivity created");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_username);
     }
 
     public void onNextButtonClicked(View view) {
+        Log.i("UsernameActivity", "UsernameActivity entered");
         TextView textView = findViewById(R.id.editTextTextPersonName);
         SharedPreferences mainStudent = getSharedPreferences("mainStudent", MODE_PRIVATE);
         SharedPreferences.Editor edit = mainStudent.edit();
