@@ -27,7 +27,6 @@ public class ClassInputActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.i("ClassInputActivity", "ClassInputActivity created");
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_class_input);
         Spinner session_spinner = (Spinner) findViewById(R.id.session_spinner);
@@ -96,19 +95,16 @@ public class ClassInputActivity extends AppCompatActivity {
     }
 
     public void onEnterButtonClicked(View view) {
-        Log.i("ClassInputActivity", "Attempting to create ClassData");
         //get the year
         TextView yearView = findViewById(R.id.year_input);
         String yearText = yearView.getText().toString();
         Optional<Integer> maybeYear = parseCount(yearText);
         if(!maybeYear.isPresent()) {
-            Log.i("ClassInputActivity", "Year was not a number");
             //add alert
             return;
         }
         int year = Integer.parseInt(yearText);
         if(!isValidYear(year)) {
-            Log.i("ClassInputActivity", "Year was invalid");
             //add alert
             return;
         }
@@ -117,7 +113,6 @@ public class ClassInputActivity extends AppCompatActivity {
         Spinner sessionView = findViewById(R.id.session_spinner);
         String session = sessionView.getSelectedItem().toString();
         if(!isValidSession(session)) {
-            Log.i("ClassInputActivity", "Session was invalid");
             //alert
             return;
         }
@@ -126,7 +121,6 @@ public class ClassInputActivity extends AppCompatActivity {
         TextView subjectView = findViewById(R.id.subject_input);
         String subject = subjectView.getText().toString();
         if(!isValidSubject(subject)) {
-            Log.i("ClassInputActivity", "Subject was invalid");
             //alert
             return;
         }
@@ -135,7 +129,6 @@ public class ClassInputActivity extends AppCompatActivity {
         TextView cnView = findViewById(R.id.course_number_input);
         String courseNum = cnView.getText().toString();
         if(!isValidCourseNum(courseNum)) {
-            Log.i("ClassInputActivity", "Course Number was invalid");
             //alert
             return;
         }
@@ -145,9 +138,6 @@ public class ClassInputActivity extends AppCompatActivity {
         //need to use ClassDataAdapter add method
         classDataAdapter.addClass(newClassData);
         main_user_classes.add(newClassData);
-
-
-        Log.i("ClassInputActivity", "ClassData created");
     }
 
     //add to a utilities class
@@ -161,13 +151,12 @@ public class ClassInputActivity extends AppCompatActivity {
     }
 
     public void onDoneButtonClicked(View view) {
-        Log.i("ClassInputActivity", "ClassInputActivity closing");
         SharedPreferences mainStudent = getSharedPreferences("mainStudent", MODE_PRIVATE);
         SharedPreferences.Editor edit = mainStudent.edit();
         BOFStudent temp = new BOFStudent("temp", "temp", main_user_classes);
         String mainUserClassString = temp.convertClassData();
         edit.putString("classes", mainUserClassString);
-        Intent intent = new Intent(ClassInputActivity.this, MainActivity.class);
-        ClassInputActivity.this.startActivity(intent);
+      Intent intent = new Intent(ClassInputActivity.this, MainActivity.class);
+     ClassInputActivity.this.startActivity(intent);
     }
 }

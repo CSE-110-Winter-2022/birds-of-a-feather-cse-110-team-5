@@ -37,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
         BOFStudentRecyclerView.setAdapter(studentListAdapter);
     }
 
+    /*
+        Temporarily acting as the bluetooth manager for demo purposes
+     */
     public void onEnterButtonClicked(View view) {
         Log.i("MainActivity", "Query started");
         ClassData c1 = new BOFClassData(2022, "FA", "CSE", "110");
@@ -49,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
         student2List.add(c2); student2List.add(c3);
         List<ClassData> student3List = new ArrayList<>();
         student3List.add(c1); student3List.add(c2); student3List.add(c3);
-
 
         Student student1 = new BOFStudent("Main", "Don't Worry", student1List);
         Student student2 = new BOFStudent("John",
