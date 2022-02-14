@@ -8,7 +8,7 @@ public class BOFSharedClasses extends SharedClasses{
     private Student otherStudent;
     private List<ClassData> sharedClasses;
 
-    public void SharedClasses(Student mainStudent, Student otherStudent) {
+    public BOFSharedClasses(Student mainStudent, Student otherStudent) {
         this.mainStudent = mainStudent;
         this.otherStudent = otherStudent;
 
