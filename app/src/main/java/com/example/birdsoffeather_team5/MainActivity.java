@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences pref2 = getSharedPreferences("mainStudent", MODE_PRIVATE);
         edit = pref2.edit();
-        edit.putString("name","temp");
+        edit.putString("name","Main");
         edit.apply();
 
         studentListAdapter.addNewStudent(withS2);

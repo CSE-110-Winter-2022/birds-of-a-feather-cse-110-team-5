@@ -14,6 +14,9 @@ public class HomeScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
+        SharedPreferences name = getSharedPreferences("mainStudent", MODE_PRIVATE);
+        SharedPreferences.Editor edit = name.edit();
+        edit.clear().commit();
     }
 
     public void onLaunchRunQueryClicked(View view) {
