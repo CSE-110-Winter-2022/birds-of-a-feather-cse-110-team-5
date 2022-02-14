@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">BirdsOfFeather_Team5</string>
+    <string name="boa_logo">BoA Logo</string>
+    <string name="start">Start</string>
+    <string name="userimages">userImages</string>
+    <string name="please_enter_your_name">Please Enter Your Name</string>
+    <string name="name">Name</string>
+    <string name="next">NEXT</string>
 </resources>

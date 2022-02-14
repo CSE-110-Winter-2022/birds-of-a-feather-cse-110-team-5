@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -143,5 +144,10 @@ public class ClassInputActivity extends AppCompatActivity {
         } catch (NumberFormatException e) {
             return Optional.empty();
         }
+    }
+
+    public void onDoneButtonClicked(View view) {
+//      Intent intent = new Intent(ClassInputActivity.this, RunQueryActivity.class);
+//      ClassInputActivity.this.startActivity(intent);
     }
 }
