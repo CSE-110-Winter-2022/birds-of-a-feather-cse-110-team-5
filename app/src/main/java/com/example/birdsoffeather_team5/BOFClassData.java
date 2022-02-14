@@ -18,6 +18,10 @@ public class BOFClassData implements ClassData{
     public String getSession() {return session;}
     public String getSubject() {return subject;}
     public String getCourseNum() {return courseNum;}
+    public static String[] decode(String classData){
+        String[] temp = classData.split(",");
+        return temp;
+    }
 
     public void setYear(int y) {year = y;}
     public void setSession(String s) {session = s;}

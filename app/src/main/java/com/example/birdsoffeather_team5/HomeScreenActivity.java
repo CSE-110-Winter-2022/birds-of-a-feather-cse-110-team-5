@@ -4,6 +4,7 @@ package com.example.birdsoffeather_team5;
 
         import android.app.Activity;
         import android.content.Intent;
+        import android.content.SharedPreferences;
         import android.os.Bundle;
         import android.view.View;
 
@@ -16,7 +17,14 @@ public class HomeScreenActivity extends AppCompatActivity {
     }
 
     public void onLaunchRunQueryClicked(View view) {
-        Intent intent = new Intent(HomeScreenActivity.this, UsernameActivity.class);
-        HomeScreenActivity.this.startActivity(intent);
+        SharedPreferences mainStudent = getSharedPreferences("mainStudent", MODE_PRIVATE);
+        if(mainStudent.getString("name","").equals("")){
+            Intent intent = new Intent(HomeScreenActivity.this, UsernameActivity.class);
+            HomeScreenActivity.this.startActivity(intent);
+        }
+        else{
+            Intent intent = new Intent(HomeScreenActivity.this, MainActivity.class);
+            startActivity(intent);
+        }
     }
 }

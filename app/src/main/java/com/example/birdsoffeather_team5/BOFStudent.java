@@ -18,6 +18,24 @@ public class BOFStudent implements Student{
     public String getName() {return name;}
     public String getURL() {return url;}
     public List<ClassData> getClassData() {return classData;}
+    public String convertClassData(){
+        String answer = "";
+        for(ClassData i : this.classData){
+            answer = answer.concat(i.getYear() + "," + i.getSession() + "," + i.getSubject() + "," + i.getCourseNum() + ",,");
+        }
+        return answer;
+    }
+    public static List<ClassData> decodeClassData(String classData){
+        List<ClassData> answer = new ArrayList<>();
+        BOFClassData temp = new BOFClassData(-1, "", "", "");
+        String[] temp1 = classData.split(",,");
+        for(int i = 0; i < temp1.length; i++){
+            String[] holder = temp.decode(temp1[i]);
+            BOFClassData hold = new BOFClassData(Integer.parseInt(holder[0]), holder[1], holder[2], holder[3]);
+            answer.add(hold);
+        }
+        return answer;
+    }
 
     public void setName(String n) {name = n;}
     public void setURL(String u) {url = u;}

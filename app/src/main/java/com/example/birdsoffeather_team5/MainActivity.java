@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
@@ -20,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        SharedPreferences mainStudent = getSharedPreferences("mainStudent", MODE_PRIVATE);
+        SharedPreferences pref = getSharedPreferences("sharedClasses", MODE_PRIVATE);
         //call other activities before this one
         List<Student> students = new ArrayList<>();
         List<SharedClasses> sharedClassesList = new ArrayList<>();
