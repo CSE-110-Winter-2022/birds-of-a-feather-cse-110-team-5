@@ -4,11 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ProfileViewActivity extends AppCompatActivity {
@@ -21,6 +23,12 @@ public class ProfileViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_view);
+
+        /*SharedPreferences pref = getSharedPreferences("sharedClasses", MODE_PRIVATE);
+        String studentName = getIntent().getStringExtra("student_name");
+
+        String classesString = pref.getString(studentName, "error_student_not_found");
+        List<ClassData> bcd = BOFStudent.decodeClasses(classesString);*/
 
         //?? how to get sharedclasses?
         List<ClassData> l1 = new ArrayList<ClassData>();
