@@ -8,11 +8,11 @@ public class BOFStudent implements Student{
     private String url;
     private List<ClassData> classData;
 
-    /**
-     * Default constructor
-     */
-    public BOFStudent() {
 
+    public BOFStudent(String name, String url, List<ClassData> classData) {
+        this.name = name;
+        this.url = url;
+        this.classData = classData;
     }
 
     public String getName() {return name;}
