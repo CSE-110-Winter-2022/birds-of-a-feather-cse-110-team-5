@@ -3,12 +3,12 @@ package com.example.birdsoffeather_team5;
 import java.util.List;
 import java.util.ArrayList;
 
-public class BOFSharedClasses implements SharedClasses{
+public class BOFSharedClasses extends SharedClasses{
     private Student mainStudent;
     private Student otherStudent;
     private List<ClassData> sharedClasses;
 
-    public void SharedClasses(Student mainStudent, Student otherStudent) {
+    public BOFSharedClasses(Student mainStudent, Student otherStudent) {
         this.mainStudent = mainStudent;
         this.otherStudent = otherStudent;
 
@@ -32,5 +32,18 @@ public class BOFSharedClasses implements SharedClasses{
     }
     public Student getOtherStudent() {
         return otherStudent;
+    }
+
+    @Override
+    public int compareTo(SharedClasses sharedClasses) {
+        return this.getSharedClasses().size() - sharedClasses.getSharedClasses().size();
+    }
+
+    public static List<ClassData> findSharedClasses(List<ClassData> c1, List<ClassData> c2)
+    {
+        List<ClassData> shared = new ArrayList<>(c1);
+
+        shared.retainAll(c2);
+        return shared;
     }
 }

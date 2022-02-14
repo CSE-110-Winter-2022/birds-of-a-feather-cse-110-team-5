@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ImageURLActivity">
+
+    <TextView
+        android:id="@+id/ImageURL_textview"
+        android:layout_width="218dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="294dp"
+        android:layout_marginBottom="40dp"
+        android:text="Please Enter URL for Your Profile Image"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/editTextImageURL"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/ImageURL_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="43dp"
+        android:layout_marginBottom="172dp"
+        android:text="@string/next"
+        android:onClick="onNextButtonClickedImage"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextImageURL" />
+
+
+    <EditText
+        android:id="@+id/editTextImageURL"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="63dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        android:text="Image URL"
+        app:layout_constraintBottom_toTopOf="@+id/ImageURL_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ImageURL_textview"
+        android:autofillHints="" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

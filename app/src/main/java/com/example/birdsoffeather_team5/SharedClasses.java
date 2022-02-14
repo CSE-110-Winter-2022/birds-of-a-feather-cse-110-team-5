@@ -2,6 +2,8 @@ package com.example.birdsoffeather_team5;
 
 import java.util.List;
 
-public interface SharedClasses {
-    public List<ClassData> getSharedClasses();
+public abstract class SharedClasses implements Comparable<SharedClasses>{
+    public abstract List<ClassData> getSharedClasses();
+    public abstract Student getOtherStudent();
+    public abstract Student getMainStudent();
 }

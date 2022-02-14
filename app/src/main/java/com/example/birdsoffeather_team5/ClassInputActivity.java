@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,13 +23,15 @@ public class ClassInputActivity extends AppCompatActivity {
     private RecyclerView BOFClassRecyclerView;
     private LinearLayoutManager BOFClassLayoutManager;
     private BOFClassDataAdapter classDataAdapter;
+    private List<ClassData> main_user_classes;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.i("ClassInputActivity", "ClassInputActivity created");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_class_input);
-
         Spinner session_spinner = (Spinner) findViewById(R.id.session_spinner);
 
+        main_user_classes = new ArrayList<>();
         //session_spinner.setOnItemSelectedListener(this);
 
         ArrayList<String> categories = new ArrayList<String>();
@@ -133,6 +137,7 @@ public class ClassInputActivity extends AppCompatActivity {
 
         //need to use ClassDataAdapter add method
         classDataAdapter.addClass(newClassData);
+        main_user_classes.add(newClassData);
     }
 
     //add to a utilities class
@@ -143,5 +148,15 @@ public class ClassInputActivity extends AppCompatActivity {
         } catch (NumberFormatException e) {
             return Optional.empty();
         }
+    }
+
+    public void onDoneButtonClicked(View view) {
+        SharedPreferences mainStudent = getSharedPreferences("mainStudent", MODE_PRIVATE);
+        SharedPreferences.Editor edit = mainStudent.edit();
+        BOFStudent temp = new BOFStudent("temp", "temp", main_user_classes);
+        String mainUserClassString = temp.convertClassData();
+        edit.putString("classes", mainUserClassString);
+      Intent intent = new Intent(ClassInputActivity.this, MainActivity.class);
+     ClassInputActivity.this.startActivity(intent);
     }
 }

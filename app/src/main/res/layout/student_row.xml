@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/other_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="16sp"
+        android:height="48sp"
+        android:lineHeight="32sp"
+        android:text="Student Name"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="66dp"
+        android:layout_height="78dp"
+        android:layout_gravity="left"
+        tools:srcCompat="@drawable/ic_launcher_background" />
+
+    <TextView
+        android:id="@+id/num_class"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ClassNum"
+        android:layout_gravity="right|center"/>
+</FrameLayout>
