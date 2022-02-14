@@ -49,7 +49,6 @@ public class ClassInputActivity extends AppCompatActivity {
 
 
         List<BOFClassData> classes = new ArrayList<BOFClassData>();
-        classes.add(0, new BOFClassData(2022, "FA", "CSE", "110"));
         setTitle("Classes");
 
         BOFClassRecyclerView = findViewById(R.id.class_recyclerview);
@@ -150,6 +149,10 @@ public class ClassInputActivity extends AppCompatActivity {
     }
 
     public void onDoneButtonClicked(View view) {
+        if(classDataAdapter.getItemCount() < 1) {
+            //add message to notify at least 1 class needed
+            return;
+        }
         SharedPreferences mainStudent = getSharedPreferences("mainStudent", MODE_PRIVATE);
         SharedPreferences.Editor edit = mainStudent.edit();
         BOFStudent temp = new BOFStudent("temp", "temp", main_user_classes);
