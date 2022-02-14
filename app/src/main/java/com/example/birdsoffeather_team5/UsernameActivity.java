@@ -20,7 +20,7 @@ public class UsernameActivity extends AppCompatActivity {
         TextView textView = findViewById(R.id.editTextTextPersonName);
         SharedPreferences mainStudent = getSharedPreferences("mainStudent", MODE_PRIVATE);
         SharedPreferences.Editor edit = mainStudent.edit();
-        edit.putString(textView.getText().toString(),"");
+        edit.putString("name",textView.getText().toString());
         edit.putString("check", "done");
         edit.apply();
         Intent intent = new Intent(UsernameActivity.this, ImageURLActivity.class);

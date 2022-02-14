@@ -21,17 +21,26 @@ public class ProfileViewActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_view);
 
-        /*SharedPreferences pref = getSharedPreferences("sharedClasses", MODE_PRIVATE);
+        SharedPreferences pref = getSharedPreferences("sharedClasses", MODE_PRIVATE);
         String studentName = getIntent().getStringExtra("student_name");
 
-        String classesString = pref.getString(studentName, "error_student_not_found");
-        List<ClassData> bcd = BOFStudent.decodeClasses(classesString);*/
+        String otherClassesString = pref.getString(studentName, "error_other_student_not_found");
+        List<ClassData> otherStudentClasses = BOFStudent.decodeClassData(otherClassesString);
+
+        SharedPreferences pref2 = getSharedPreferences("mainStudent", MODE_PRIVATE);
+        String userName = pref2.getString("name","error_user_name_not_found");
+
+        String userClassesString = pref.getString(userName, "error_main_student_not_found");
+        List<ClassData> userStudentClasses = BOFStudent.decodeClassData(userClassesString);
+
+        List<ClassData> sc = BOFSharedClasses.findSharedClasses(userStudentClasses, otherStudentClasses);
 
         //?? how to get sharedclasses?
-        List<ClassData> l1 = new ArrayList<ClassData>();
+        /*<ClassData> l1 = new ArrayList<ClassData>();
         List<ClassData> l2 = new ArrayList<ClassData>();
         ClassData c1 = new BOFClassData(2022,"WI","CSE","110");
         l1.add(c1);
@@ -47,11 +56,11 @@ public class ProfileViewActivity extends AppCompatActivity {
         Student s1 = new BOFStudent("s1","a",l1);
         Student s2 = new BOFStudent("s2","b",l2);
 
-        SharedClasses sc = new BOFSharedClasses(s1,s2);
+        SharedClasses sc = new BOFSharedClasses(s1,s2);*/
 
         //change sharedclass data to be a list of BOFclassdata instead of list of classdata
         List<BOFClassData> bcd = new ArrayList<BOFClassData>();
-        for (ClassData cd: sc.getSharedClasses())
+        for (ClassData cd: sc)
             bcd.add((BOFClassData)cd);
 
         BOFClassRecyclerView = findViewById(R.id.common_classes);
@@ -63,7 +72,7 @@ public class ProfileViewActivity extends AppCompatActivity {
         BOFClassRecyclerView.setAdapter(classDataAdapter);
 
         TextView nt = findViewById(R.id.name_text);
-        nt.setText(sc.getMainStudent().getName());
+        nt.setText(studentName);
     }
 
     public void onGoBackClicked(View view) {

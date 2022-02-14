@@ -38,4 +38,12 @@ public class BOFSharedClasses extends SharedClasses{
     public int compareTo(SharedClasses sharedClasses) {
         return this.getSharedClasses().size() - sharedClasses.getSharedClasses().size();
     }
+
+    public static List<ClassData> findSharedClasses(List<ClassData> c1, List<ClassData> c2)
+    {
+        List<ClassData> shared = new ArrayList<>(c1);
+
+        shared.retainAll(c2);
+        return shared;
+    }
 }

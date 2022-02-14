@@ -1,5 +1,7 @@
 package com.example.birdsoffeather_team5;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,6 +61,7 @@ public class BOFStudentListAdapter extends RecyclerView.Adapter<BOFStudentListAd
         private final ImageView pic;
         private final TextView name;
         private final TextView numShared;
+        private SharedClasses sharedClasses;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             this.pic = itemView.findViewById(R.id.imageView);
@@ -70,11 +73,15 @@ public class BOFStudentListAdapter extends RecyclerView.Adapter<BOFStudentListAd
         public void setNewStudentRow(SharedClasses sh){
             this.name.setText(sh.getOtherStudent().getName());
             this.numShared.setText("" + sh.getSharedClasses().size());
+            sharedClasses = sh;
             Glide.with(itemView).load(sh.getOtherStudent().getURL()).error(R.drawable.ic_launcher_background).into(pic);
         }
 
         @Override
         public void onClick(View view) {
+            Intent intent = new Intent(itemView.getContext(), ProfileViewActivity.class);
+            intent.putExtra("student_name", sharedClasses.getOtherStudent().getName());
+            itemView.getContext().startActivity(intent);
         }
     }
 }
