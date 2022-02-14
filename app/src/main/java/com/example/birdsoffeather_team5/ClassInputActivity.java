@@ -155,7 +155,7 @@ public class ClassInputActivity extends AppCompatActivity {
         BOFStudent temp = new BOFStudent("temp", "temp", main_user_classes);
         String mainUserClassString = temp.convertClassData();
         edit.putString("classes", mainUserClassString);
-//      Intent intent = new Intent(ClassInputActivity.this, RunQueryActivity.class);
-//      ClassInputActivity.this.startActivity(intent);
+      Intent intent = new Intent(ClassInputActivity.this, MainActivity.class);
+     ClassInputActivity.this.startActivity(intent);
     }
 }

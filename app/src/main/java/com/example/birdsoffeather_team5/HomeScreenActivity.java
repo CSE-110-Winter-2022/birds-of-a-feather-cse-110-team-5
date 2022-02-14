@@ -18,7 +18,7 @@ public class HomeScreenActivity extends AppCompatActivity {
 
     public void onLaunchRunQueryClicked(View view) {
         SharedPreferences mainStudent = getSharedPreferences("mainStudent", MODE_PRIVATE);
-        if(mainStudent.getString("name","").equals("")){
+        if(mainStudent.getString("check","").length() == 0){
             Intent intent = new Intent(HomeScreenActivity.this, UsernameActivity.class);
             HomeScreenActivity.this.startActivity(intent);
         }
