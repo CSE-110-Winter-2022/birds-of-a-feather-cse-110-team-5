@@ -2,6 +2,7 @@ package com.example.birdsoffeather_team5;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,8 @@ import androidx.appcompat.view.menu.MenuView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.Collections;
 import java.util.List;
@@ -80,7 +83,13 @@ public class BOFStudentListAdapter extends RecyclerView.Adapter<BOFStudentListAd
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(itemView.getContext(), ProfileViewActivity.class);
-            intent.putExtra("student_name", sharedClasses.getOtherStudent().getName());
+            Gson gson = new Gson();
+            String json = gson.toJson(sharedClasses);
+            Log.i("BOFStudentListAdapter", "Made json with: " + sharedClasses.getOtherStudent().getName());
+            Log.i("BOFStudentListAdapter", "Sharing: " + sharedClasses.getSharedClasses().get(0).getCourseNum());
+            Log.i("BOFStudentListAdapter", "json: " + json);
+
+            intent.putExtra("student_name", json);
             itemView.getContext().startActivity(intent);
         }
     }

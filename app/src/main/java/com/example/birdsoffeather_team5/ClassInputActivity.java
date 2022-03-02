@@ -13,6 +13,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -50,7 +52,6 @@ public class ClassInputActivity extends AppCompatActivity {
 
 
         List<BOFClassData> classes = new ArrayList<BOFClassData>();
-        classes.add(0, new BOFClassData(2022, "FA", "CSE", "110"));
         setTitle("Classes");
 
         BOFClassRecyclerView = findViewById(R.id.class_recyclerview);
@@ -153,10 +154,14 @@ public class ClassInputActivity extends AppCompatActivity {
     public void onDoneButtonClicked(View view) {
         SharedPreferences mainStudent = getSharedPreferences("mainStudent", MODE_PRIVATE);
         SharedPreferences.Editor edit = mainStudent.edit();
-        BOFStudent temp = new BOFStudent("temp", "temp", main_user_classes);
-        String mainUserClassString = temp.convertClassData();
-        edit.putString("classes", mainUserClassString);
-      Intent intent = new Intent(ClassInputActivity.this, MainActivity.class);
-     ClassInputActivity.this.startActivity(intent);
+        Student temp = new BOFStudent("temp", "temp", main_user_classes);
+        //String mainUserClassString = temp.convertClassData();
+        Gson gson = new Gson();
+        String mainUser = gson.toJson(temp);
+        edit.putString("studentObject", mainUser);
+        edit.apply();
+        Log.i("ClassInputActivity", mainUser);
+        Intent intent = new Intent(ClassInputActivity.this, MainActivity.class);
+        ClassInputActivity.this.startActivity(intent);
     }
 }
