@@ -30,10 +30,12 @@ public class ClassInputActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_class_input);
         Spinner session_spinner = (Spinner) findViewById(R.id.session_spinner);
+        Spinner class_size_spinner = (Spinner) findViewById(R.id.class_size_spinner);
 
         main_user_classes = new ArrayList<>();
         //session_spinner.setOnItemSelectedListener(this);
 
+        //create spinner choices for class session
         ArrayList<String> categories = new ArrayList<String>();
         categories.add("FA");
         categories.add("WI");
@@ -47,6 +49,21 @@ public class ClassInputActivity extends AppCompatActivity {
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         session_spinner.setAdapter(dataAdapter);
+
+        //create spiiner choices for class size
+        ArrayList<String> categories2 = new ArrayList<String>();
+        categories2.add("Tiny (<40)");
+        categories2.add("Small (40-75)");
+        categories2.add("Medium (75-150)");
+        categories2.add("Large (150-250)");
+        categories2.add("Huge (250-400)");
+        categories2.add("Gigantic (400+)");
+
+        ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories2);
+
+        dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        class_size_spinner.setAdapter(dataAdapter2);
 
 
         List<BOFClassData> classes = new ArrayList<BOFClassData>();
