@@ -42,9 +42,9 @@ public class MainActivity extends AppCompatActivity {
      */
     public void onEnterButtonClicked(View view) {
         Log.i("MainActivity", "Query started");
-        ClassData c1 = new BOFClassData(2022, "FA", "CSE", "110");
-        ClassData c2 = new BOFClassData(2020, "SP", "POLI", "28");
-        ClassData c3 = new BOFClassData(2021, "WI", "CSE", "120");
+        ClassData c1 = new BOFClassData(2022, "FA", "CSE", "110","Large");
+        ClassData c2 = new BOFClassData(2020, "SP", "POLI", "28","Small");
+        ClassData c3 = new BOFClassData(2021, "WI", "CSE", "120","Large");
 
         List<ClassData> student1List = new ArrayList<>();
         student1List.add(c1); student1List.add(c2);

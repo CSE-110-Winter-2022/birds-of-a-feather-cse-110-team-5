@@ -50,7 +50,7 @@ public class ClassInputActivity extends AppCompatActivity {
 
 
         List<BOFClassData> classes = new ArrayList<BOFClassData>();
-        classes.add(0, new BOFClassData(2022, "FA", "CSE", "110"));
+        classes.add(0, new BOFClassData(2022, "FA", "CSE", "110","Large"));
         setTitle("Classes");
 
         BOFClassRecyclerView = findViewById(R.id.class_recyclerview);
@@ -133,7 +133,7 @@ public class ClassInputActivity extends AppCompatActivity {
             return;
         }
 
-        BOFClassData newClassData = new BOFClassData(year, session, subject, courseNum);
+        BOFClassData newClassData = new BOFClassData(year, session, subject, courseNum,"todo");
 
         //need to use ClassDataAdapter add method
         classDataAdapter.addClass(newClassData);

@@ -5,12 +5,14 @@ public class BOFClassData implements ClassData{
     private String session;
     private String subject;
     private String courseNum;
+    private String classSize;
 
-    public BOFClassData(int year, String session, String subject, String courseNum){
+    public BOFClassData(int year, String session, String subject, String courseNum, String classSize){
         this.year = year;
         this.session = session;
         this.subject = subject;
         this.courseNum = courseNum;
+        this.classSize = classSize;
     }
 
 
@@ -18,6 +20,7 @@ public class BOFClassData implements ClassData{
     public String getSession() {return session;}
     public String getSubject() {return subject;}
     public String getCourseNum() {return courseNum;}
+    public String getClassSize() {return classSize;}
     public static String[] decode(String classData){
         String[] temp = classData.split(",");
         return temp;
@@ -27,6 +30,7 @@ public class BOFClassData implements ClassData{
     public void setSession(String s) {session = s;}
     public void setSubject(String s) {subject = s;}
     public void setCourseNum(String c) {courseNum = c;}
+    public void setClassSize(String c) {classSize = c;}
 
     /**
      * Overrides Object's equal method to check if this ClassData
