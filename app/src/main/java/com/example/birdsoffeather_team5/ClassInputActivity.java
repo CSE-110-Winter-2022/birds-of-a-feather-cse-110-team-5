@@ -111,6 +111,9 @@ public class ClassInputActivity extends AppCompatActivity {
                 Pattern.matches("\\d{1,3}[A-Z]{0,3}", courseNum);
     }
 
+    //returns true if class size is valid (class size is chose from a dropdown, so any non-null value is valid)
+    private boolean isValidClassSize(String classSize) {return classSize != null;}
+
     public void onEnterButtonClicked(View view) {
         //get the year
         TextView yearView = findViewById(R.id.year_input);
@@ -150,7 +153,14 @@ public class ClassInputActivity extends AppCompatActivity {
             return;
         }
 
-        BOFClassData newClassData = new BOFClassData(year, session, subject, courseNum,"todo");
+        Spinner classSizeView = findViewById(R.id.class_size_spinner);
+        String classSize = classSizeView.getSelectedItem().toString();
+        if(!isValidClassSize(classSize)) {
+            //alert
+            return;
+        }
+
+        BOFClassData newClassData = new BOFClassData(year, session, subject, courseNum,classSize);
 
         //need to use ClassDataAdapter add method
         classDataAdapter.addClass(newClassData);
