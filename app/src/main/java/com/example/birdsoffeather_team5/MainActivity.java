@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Log.i("MainActivity", "MainActivity created");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        SharedPreferences mainStudent = getSharedPreferences("mainStudent", MODE_PRIVATE);
+        //SharedPreferences mainStudentPref = getSharedPreferences("mainStudent", MODE_PRIVATE);
         SharedPreferences pref = getSharedPreferences("sharedClasses", MODE_PRIVATE);
 
         //call other activities before this one
@@ -40,7 +40,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         BOFStudentLayoutManager = new LinearLayoutManager(this);
 
         BOFStudentRecyclerView.setLayoutManager(BOFStudentLayoutManager);
-        studentListAdapter = new BOFStudentListAdapter(students, sharedClassesList);
+
+        List<ClassData> mainStudentList = new ArrayList<ClassData>();
+        Student mainStudent = new BOFStudent("Main", "Don't Worry", mainStudentList);
+        studentListAdapter = new BOFStudentListAdapter(students, sharedClassesList, mainStudent);
         BOFStudentRecyclerView.setAdapter(studentListAdapter);
 
 
@@ -117,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         ClassData c1 = new BOFClassData(2022, "FA", "CSE", "110","Large");
         ClassData c2 = new BOFClassData(2020, "SP", "POLI", "28","Small");
         ClassData c3 = new BOFClassData(2021, "WI", "CSE", "120","Large");
-        ClassData c4 = new BOFClassData(2022, "WI", "CSE","120","Large");
+        ClassData c4 = new BOFClassData(2019, "SP", "CSE","120","Large");
         ClassData c5 = new BOFClassData(2021, "SS1", "CSE","121","Small");
 
 
@@ -136,6 +139,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                         .show();
                 // do nothing for now
 
+                studentListAdapter.setSort("Default");
                 break;
 
             case 1:
@@ -143,6 +147,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                         items[1],
                         Toast.LENGTH_LONG)
                         .show();
+
+
+                studentListAdapter.setSort("SortByRecent");
+
+                /*
                 List<Student> studentLists = studentListAdapter.getBOFStudentList();
                 List<Student> tempStudentList = new ArrayList<Student>();
                 for(Student student: studentLists){
@@ -159,6 +168,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     studentListAdapter.addStudent(sharedClasses);
                 }
 
+                */
+
                 break;
 
 
@@ -167,6 +178,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                         items[2],
                         Toast.LENGTH_LONG)
                         .show();
+
+                studentListAdapter.setSort("SortBySmall");
+                /*
 
                 List<Student> studentListsForSmall = studentListAdapter.getBOFStudentList();
 
@@ -198,6 +212,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     Log.i("shared classes", sharedClasses.toString());
                     studentListAdapter.addStudent(sharedClasses);
                 }
+
+                 */
                 break;
 
             case 3:

@@ -16,13 +16,17 @@ import java.util.Collections;
 import java.util.List;
 
 public class BOFStudentListAdapter extends RecyclerView.Adapter<BOFStudentListAdapter.ViewHolder> {
-    private final List<Student> students;
-    private final List<SharedClasses> sharedClassesList;
+    private List<Student> students;
+    private List<SharedClasses> sharedClassesList;
+    private Student mainStudent;
+    private String sortBy;
 
-    public BOFStudentListAdapter(List<Student> students, List<SharedClasses> sharedClassesList) {
+    public BOFStudentListAdapter(List<Student> students, List<SharedClasses> sharedClassesList, Student mainStudent) {
         super();
         this.students = students;
         this.sharedClassesList = sharedClassesList;
+        this.mainStudent = mainStudent;
+        this.sortBy = "Default";
     }
 
     @NonNull
@@ -47,7 +51,7 @@ public class BOFStudentListAdapter extends RecyclerView.Adapter<BOFStudentListAd
     public List<Student> getBOFStudentList(){
         return students;
     }
-
+    /*
     public void addNewStudent(SharedClasses sh) {
         if(students.contains(sh.getOtherStudent())) {
             return;
@@ -56,6 +60,46 @@ public class BOFStudentListAdapter extends RecyclerView.Adapter<BOFStudentListAd
         sharedClassesList.add(sh);
         Collections.sort(sharedClassesList);
         Collections.reverse(sharedClassesList);
+        this.notifyItemInserted(sharedClassesList.indexOf(sh));
+    }
+    */
+
+    public void setSort(String sort) {
+        this.sortBy = sort;
+        switch(sort) {
+            case "Default":
+                Collections.sort(sharedClassesList);
+                Collections.reverse(sharedClassesList);
+                notifyDataSetChanged();
+                break;
+            case "SortBySmall":
+                sharedClassesList = SortSmallClasses.sortBySmall(students, mainStudent);
+                notifyDataSetChanged();
+                break;
+            case "SortByRecent":
+                sharedClassesList = SortRecentClasses.sortByRecent(students, mainStudent);
+                notifyDataSetChanged();
+                break;
+        }
+    }
+
+    public void addNewStudent(SharedClasses sh) {
+        if(students.contains(sh.getOtherStudent())) {
+            return;
+        }
+        students.add(sh.getOtherStudent());
+        switch(sortBy) {
+            case "Default":
+                Collections.sort(sharedClassesList);
+                Collections.reverse(sharedClassesList);
+                break;
+            case "SortBySmall":
+                sharedClassesList = SortSmallClasses.sortBySmall(students, mainStudent);
+                break;
+            case "SortByRecent":
+                sharedClassesList = SortRecentClasses.sortByRecent(students, mainStudent);
+                break;
+        }
         this.notifyItemInserted(sharedClassesList.indexOf(sh));
     }
 

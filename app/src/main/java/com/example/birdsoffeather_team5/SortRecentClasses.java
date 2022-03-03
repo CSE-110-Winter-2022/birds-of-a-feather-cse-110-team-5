@@ -6,6 +6,7 @@ import android.util.Pair;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -35,14 +36,25 @@ public class SortRecentClasses {
         ArrayList<Student> sortedStudents = new ArrayList<>();
         HashMap<Integer, Pair<Integer, String>> count = new HashMap<>();
 
-        for(Student student: userProfiles) {
-            BOFSharedClasses temp = new BOFSharedClasses(mainStudent, student);
+        for(int i = 0; i < userProfiles.size(); i++) {
+            BOFSharedClasses temp = new BOFSharedClasses(mainStudent, userProfiles.get(i));
             List<ClassData> sharedClasses = temp.getSharedClasses();
-            int i = 0;
             int score = 0;
             int age = 0;
             for(ClassData classData : sharedClasses){
-                age = (year - classData.getYear())*4 + sessionVal - classData.getSessionNum();
+
+                if (classData.getYear() == 2021 && classData.getSession().equals("FA")){
+                    age = 0;
+                } else if (classData.getYear() == 2021 && (classData.getSession().equals("SS1") || classData.getSession().equals("SS2") || classData.getSession().equals("SSS"))){
+                    age = 1;
+                } else if (classData.getYear() == 2021 && classData.getSession().equals("SP")){
+                    age = 2;
+                }  else if (classData.getYear() == 2021 && classData.getSession().equals("WI")){
+                    age = 3;
+                } else {
+                    age = 4;
+                }
+
                 if (age == 0){
                     score += 5;
                 } else if (age == 1){
@@ -55,10 +67,9 @@ public class SortRecentClasses {
                     score += 1;
                 }
             }
-            Log.i("Calculating total scores based on ages", student.getName() + score);
+            Log.i("Calculating total scores based on ages", userProfiles.get(i).getName() + score);
             Pair<Integer, String> input = new Pair<>(sharedClasses.size(), String.valueOf(score));
             count.put(i, input);
-            i++;
         }
 
         ArrayList<Pair<Integer, String>> sortHelper = new ArrayList<>();
@@ -96,6 +107,7 @@ public class SortRecentClasses {
             SharedClasses temp = new BOFSharedClasses(mainStudent, student);
             sharedClasses.add(temp);
         }
+        Collections.reverse(sharedClasses);
         return sharedClasses;
     }
 }
