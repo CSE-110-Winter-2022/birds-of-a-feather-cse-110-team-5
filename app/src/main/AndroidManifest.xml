@@ -10,6 +10,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BirdsOfFeather_Team5" >
+        <meta-data
+            android:name="com.google.android.nearby.messages.API_KEY"
+            android:value="AIzaSyCh7pDx-fjMwQiFX4zc52cCyzFMsN-lzjE" />
         <activity
             android:name=".ImageURLActivity"
             android:exported="false" />
