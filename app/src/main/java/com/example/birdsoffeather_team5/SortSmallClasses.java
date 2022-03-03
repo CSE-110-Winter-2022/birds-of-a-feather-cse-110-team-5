@@ -26,19 +26,19 @@ public class SortSmallClasses{
             double totalWeight = 0;
             for(int k = 0; k < sharedClasses.size(); k++) {
                 Log.i("Checking class size", userProfiles.get(i).getName() + sharedClasses.get(k).getClassSize());
-                if(Integer.parseInt(sharedClasses.get(k).getClassSize()) < 40){
+                if(sharedClasses.get(k).getClassSize().equals("Tiny")){
                     totalWeight += 1;
                 }
-                else if(Integer.parseInt(sharedClasses.get(k).getClassSize()) < 75){
+                else if(sharedClasses.get(k).getClassSize().equals("Small")){
                     totalWeight += 0.33;
                 }
-                else if(Integer.parseInt(sharedClasses.get(k).getClassSize()) < 150){
+                else if(sharedClasses.get(k).getClassSize().equals("Medium")){
                     totalWeight += 0.18;
                 }
-                else if(Integer.parseInt(sharedClasses.get(k).getClassSize()) < 250){
+                else if(sharedClasses.get(k).getClassSize().equals("Large")){
                     totalWeight += 0.10;
                 }
-                else if(Integer.parseInt(sharedClasses.get(k).getClassSize()) < 400){
+                else if(sharedClasses.get(k).getClassSize().equals("Huge")){
                     totalWeight += 0.06;
                 }
                 else{
@@ -77,8 +77,15 @@ public class SortSmallClasses{
             }
         }
         ArrayList<BOFSharedClasses> sharedClasses = new ArrayList<>();
-        for (BOFStudent student: sortedStudents){
-            BOFSharedClasses temp = new BOFSharedClasses(mainStudent, student);
+        /*
+        for (Student student: sortedStudents){
+            SharedClasses temp = new BOFSharedClasses(mainStudent, student);
+            sharedClasses.add(temp);
+        }
+        */
+
+        for (int i = 0; i < sortedStudents.size(); i++){
+            BOFSharedClasses temp = new BOFSharedClasses(mainStudent, sortedStudents.get(sortedStudents.size() - i -1));
             sharedClasses.add(temp);
         }
         return sharedClasses;
