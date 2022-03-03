@@ -152,6 +152,9 @@ public class ClassInputActivity extends AppCompatActivity {
     }
 
     public void onDoneButtonClicked(View view) {
+        if(main_user_classes.size() <= 0) {
+            return;
+        }
         SharedPreferences mainStudent = getSharedPreferences("mainStudent", MODE_PRIVATE);
         SharedPreferences.Editor edit = mainStudent.edit();
         Student temp = new BOFStudent("temp", "temp", main_user_classes);
