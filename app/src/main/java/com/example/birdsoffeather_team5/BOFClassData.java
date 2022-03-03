@@ -1,8 +1,11 @@
 package com.example.birdsoffeather_team5;
 
+import android.util.Log;
+
 public class BOFClassData implements ClassData{
     private int year;
     private String session;
+    private int sessionNum;
     private String subject;
     private String courseNum;
     private String classSize;
@@ -18,6 +21,26 @@ public class BOFClassData implements ClassData{
 
     public int getYear() {return year;}
     public String getSession() {return session;}
+    public int getSessionNum(){
+        switch(session) {
+            case "FA":
+                return 0;
+            case "WI":
+                return 1;
+            case "SP":
+                return 2;
+            case "SS1":
+                return 3;
+            case "SS2":
+                return 3;
+            case "SSS":
+                return 3;
+            default:
+                Log.i("BOFClassData", "getSessionNum fails");
+                return -1;
+        }
+    }
+
     public String getSubject() {return subject;}
     public String getCourseNum() {return courseNum;}
     public String getClassSize() {return classSize;}

@@ -1,53 +1,72 @@
+
 package com.example.birdsoffeather_team5;
 
 import android.util.Log;
 import android.util.Pair;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
+public class SortRecentClasses {
+    public static ArrayList<SharedClasses> sortByRecent(List<Student> userProfiles, Student mainStudent) {
 
-//SortSmallClasses.sortBySmall()
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int sessionVal = -1; // "FA" = 0, "WI" = 1, "SP" = 2, all summer sessions = 3
 
-public class SortSmallClasses{
-    public static ArrayList<SharedClasses> sortBySmall(List<Student> userProfiles, Student mainStudent){
+        switch (month) {
+            case 1: sessionVal = 1;
+            case 2: sessionVal = 1;
+            case 3: sessionVal = 1;
+            case 4: sessionVal = 2;
+            case 5: sessionVal = 2;
+            case 6: sessionVal = 2;
+            case 7: sessionVal = 3;
+            case 8: sessionVal = 3;
+            case 9: sessionVal = 3;
+            case 10: sessionVal = 0;
+            case 11: sessionVal = 0;
+            case 12: sessionVal = 0;
+        }
+
         ArrayList<Student> sortedStudents = new ArrayList<>();
         HashMap<Integer, Pair<Integer, String>> count = new HashMap<>();
-        for(int i = 0; i < userProfiles.size(); i++){
-            BOFSharedClasses temp = new BOFSharedClasses(mainStudent, userProfiles.get(i));
+
+        for(Student student: userProfiles) {
+            BOFSharedClasses temp = new BOFSharedClasses(mainStudent, student);
             List<ClassData> sharedClasses = temp.getSharedClasses();
-            double totalWeight = 0;
-            for(int k = 0; k < sharedClasses.size(); k++) {
-                Log.i("Checking class size", userProfiles.get(i).getName() + sharedClasses.get(k).getClassSize());
-                if(Integer.parseInt(sharedClasses.get(k).getClassSize()) < 40){
-                    totalWeight += 1;
-                }
-                else if(Integer.parseInt(sharedClasses.get(k).getClassSize()) < 75){
-                    totalWeight += 0.33;
-                }
-                else if(Integer.parseInt(sharedClasses.get(k).getClassSize()) < 150){
-                    totalWeight += 0.18;
-                }
-                else if(Integer.parseInt(sharedClasses.get(k).getClassSize()) < 250){
-                    totalWeight += 0.10;
-                }
-                else if(Integer.parseInt(sharedClasses.get(k).getClassSize()) < 400){
-                    totalWeight += 0.06;
-                }
-                else{
-                    totalWeight += 0.03;
+            int i = 0;
+            int score = 0;
+            int age = 0;
+            for(ClassData classData : sharedClasses){
+                age = (year - classData.getYear())*4 + sessionVal - classData.getSessionNum();
+                if (age == 0){
+                    score += 5;
+                } else if (age == 1){
+                    score += 4;
+                } else if (age == 2){
+                    score += 3;
+                } else if (age == 3){
+                    score += 2;
+                } else if (age >= 4){
+                    score += 1;
                 }
             }
-            Log.i("Checking weights", userProfiles.get(i).getName() + totalWeight);
-            Pair<Integer, String> input = new Pair<>(sharedClasses.size(), String.valueOf(totalWeight));
+            Log.i("Calculating total scores based on ages", student.getName() + score);
+            Pair<Integer, String> input = new Pair<>(sharedClasses.size(), String.valueOf(score));
             count.put(i, input);
+            i++;
         }
+
         ArrayList<Pair<Integer, String>> sortHelper = new ArrayList<>();
         for(int i = 0; i < userProfiles.size(); i++){
             sortedStudents.add(userProfiles.get(i));
             sortHelper.add(count.get(i));
         }
+
         for(int i = 0; i < sortedStudents.size(); i++){
             for(int j = 0; j < sortedStudents.size() - 1; j++){
                 if(Double.parseDouble(sortHelper.get(j).second) == Double.parseDouble(sortHelper.get(j+1).second)){
@@ -70,12 +89,13 @@ public class SortSmallClasses{
                 }
             }
         }
+
+
         ArrayList<SharedClasses> sharedClasses = new ArrayList<>();
         for (Student student: sortedStudents){
             SharedClasses temp = new BOFSharedClasses(mainStudent, student);
             sharedClasses.add(temp);
         }
-        Log.i("Check the size of sortedStudent", String.valueOf(sharedClasses.size()));
         return sharedClasses;
     }
 }

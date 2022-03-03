@@ -1,7 +1,6 @@
 package com.example.birdsoffeather_team5;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +8,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.view.menu.MenuView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -46,6 +44,10 @@ public class BOFStudentListAdapter extends RecyclerView.Adapter<BOFStudentListAd
         return sharedClassesList.size();
     }
 
+    public List<Student> getBOFStudentList(){
+        return students;
+    }
+
     public void addNewStudent(SharedClasses sh) {
         if(students.contains(sh.getOtherStudent())) {
             return;
@@ -55,6 +57,19 @@ public class BOFStudentListAdapter extends RecyclerView.Adapter<BOFStudentListAd
         Collections.sort(sharedClassesList);
         Collections.reverse(sharedClassesList);
         this.notifyItemInserted(sharedClassesList.indexOf(sh));
+    }
+
+
+    public void addStudent(SharedClasses sh) {
+
+        students.add(sh.getOtherStudent());
+        sharedClassesList.add(sh);
+        this.notifyItemInserted(sharedClassesList.size()-1);
+    }
+
+    public void clear(){
+        students.clear();
+        sharedClassesList.clear();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
