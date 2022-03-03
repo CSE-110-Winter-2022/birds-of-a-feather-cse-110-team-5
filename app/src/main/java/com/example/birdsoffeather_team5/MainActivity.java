@@ -30,9 +30,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
-    private static final String TAG = "Nearby Function";
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+    private static final String TAG = "Nearby Function";
     private RecyclerView BOFStudentRecyclerView;
     private LinearLayoutManager BOFStudentLayoutManager;
     private BOFStudentListAdapter studentListAdapter;
@@ -41,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private String mainStudentStr;
     private Gson gson;
 
-    private String[] items = new String[]{"Default", "By Most Recent", "By Small Class Size", "Clear"};
+    private String[] items = new String[]{"Default", "By Most Recent", "By Small Class Size"};
 
 
     @Override
@@ -213,15 +212,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 }
 
                  */
-                break;
-
-            case 3:
-                Toast.makeText(getApplicationContext(),
-                        items[3],
-                        Toast.LENGTH_LONG)
-                        .show();
-                studentListAdapter.clear();
-                studentListAdapter.notifyDataSetChanged();
                 break;
         }
     }

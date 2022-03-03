@@ -101,7 +101,8 @@ public class MockMessageListener extends MessageListener {
                     Integer.parseInt(currClassSplit[0]),
                     currClassSplit[1],
                     currClassSplit[2],
-                    currClassSplit[3]);
+                    currClassSplit[3],
+                    currClassSplit[4]);
             classes.add(c);
         }
 
