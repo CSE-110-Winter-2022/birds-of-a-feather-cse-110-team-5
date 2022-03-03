@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         SharedPreferences mainStudent = getSharedPreferences("mainStudent", MODE_PRIVATE);
         SharedPreferences pref = getSharedPreferences("sharedClasses", MODE_PRIVATE);
+
         //call other activities before this one
         List<Student> students = new ArrayList<>();
         List<SharedClasses> sharedClassesList = new ArrayList<>();
