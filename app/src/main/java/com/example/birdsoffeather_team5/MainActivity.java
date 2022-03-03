@@ -144,12 +144,16 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                         Toast.LENGTH_LONG)
                         .show();
                 List<Student> studentLists = studentListAdapter.getBOFStudentList();
+                List<Student> tempStudentList = new ArrayList<Student>();
+                for(Student student: studentLists){
+                    tempStudentList.add(student);
+                }
                 studentListAdapter.clear();
 
                 studentListAdapter.notifyDataSetChanged();
                 //update studentListAdapter for sorting by Prioritize Recent
                 //get a list of BOFSharedClasses from sorting algorithm
-                List<SharedClasses> sharedClassesList = SortRecentClasses.sortByRecent(studentLists, mainStudent);
+                List<SharedClasses> sharedClassesList = SortRecentClasses.sortByRecent(tempStudentList, mainStudent);
                 for (SharedClasses sharedClasses : sharedClassesList) {
                     Log.i("shared classes", sharedClasses.toString());
                     studentListAdapter.addStudent(sharedClasses);
@@ -165,16 +169,29 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                         .show();
 
                 List<Student> studentListsForSmall = studentListAdapter.getBOFStudentList();
+
+                List<Student> tempStudentListForSmall = new ArrayList<Student>();
+                for(Student student: studentListsForSmall){
+                    tempStudentListForSmall.add(student);
+                }
+
                 Log.i("studentList works", studentListsForSmall.toString());
+
+                Log.i("tempStudentList", tempStudentListForSmall.toString());
 
                 Log.i("cleared", "Student List Adapter is cleared");
                 studentListAdapter.clear();
+
+
+                Log.i("studentList works", studentListsForSmall.toString());
+
+                Log.i("tempStudentList", tempStudentListForSmall.toString());
 
                 Log.i("notifyDataSetChanged", "notifyDataSetChanged is working");
                 studentListAdapter.notifyDataSetChanged();
                 //update studentListAdapter for sorting by Prioritize Small Classes
 
-                List<SharedClasses> sharedClassesListBySmall = SortSmallClasses.sortBySmall(studentListsForSmall, mainStudent);
+                List<SharedClasses> sharedClassesListBySmall = SortSmallClasses.sortBySmall(tempStudentListForSmall, mainStudent);
                 Log.i("shared classes", sharedClassesListBySmall.toString());
 
                 for (SharedClasses sharedClasses: sharedClassesListBySmall) {
