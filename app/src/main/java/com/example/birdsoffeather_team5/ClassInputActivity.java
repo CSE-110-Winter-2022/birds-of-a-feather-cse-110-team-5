@@ -32,6 +32,7 @@ public class ClassInputActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_class_input);
         Spinner session_spinner = (Spinner) findViewById(R.id.session_spinner);
+        Spinner size_spinner = (Spinner) findViewById(R.id.size_spinner);
 
         main_user_classes = new ArrayList<>();
         //session_spinner.setOnItemSelectedListener(this);
@@ -45,10 +46,20 @@ public class ClassInputActivity extends AppCompatActivity {
         categories.add("SSS");
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
-
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         session_spinner.setAdapter(dataAdapter);
+
+        ArrayList<String> sizeCategories = new ArrayList<>();
+        sizeCategories.add("Tiny");
+        sizeCategories.add("Small");
+        sizeCategories.add("Medium");
+        sizeCategories.add("Large");
+        sizeCategories.add("Huge");
+        sizeCategories.add("Gigantic");
+
+        ArrayAdapter<String> sizeDataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, sizeCategories);
+        sizeDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        size_spinner.setAdapter(sizeDataAdapter);
 
 
         List<BOFClassData> classes = new ArrayList<BOFClassData>();
@@ -95,6 +106,10 @@ public class ClassInputActivity extends AppCompatActivity {
                 Pattern.matches("\\d{1,3}[A-Z]{0,3}", courseNum);
     }
 
+    private boolean isValidClassSize(String classSize) {
+        return classSize != null;
+    }
+
     public void onEnterButtonClicked(View view) {
         //get the year
         TextView yearView = findViewById(R.id.year_input);
@@ -134,7 +149,13 @@ public class ClassInputActivity extends AppCompatActivity {
             return;
         }
 
-        BOFClassData newClassData = new BOFClassData(year, session, subject, courseNum,"todo");
+        Spinner sizeView = findViewById(R.id.size_spinner);
+        String size = sizeView.getSelectedItem().toString();
+        if(!isValidClassSize(size)) {
+            return;
+        }
+
+        BOFClassData newClassData = new BOFClassData(year, session, subject, courseNum, size);
 
         //need to use ClassDataAdapter add method
         classDataAdapter.addClass(newClassData);

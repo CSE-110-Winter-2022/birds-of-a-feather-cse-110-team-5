@@ -74,6 +74,6 @@ public class BOFClassData implements ClassData{
 
         return this.getYear() == other.getYear()
         && this.getSession().equals(other.getSession()) && this.getSubject().equals(other.getSubject())
-        && this.getCourseNum().equals(other.getCourseNum());
+        && this.getCourseNum().equals(other.getCourseNum()) && this.getClassSize().equals(other.getClassSize());
     }
 }
