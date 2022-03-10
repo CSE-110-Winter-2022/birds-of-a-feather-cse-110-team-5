@@ -10,6 +10,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,6 +30,7 @@ public class ProfileViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_view);
 
+        /*
         SharedPreferences pref = getSharedPreferences("sharedClasses", MODE_PRIVATE);
         String studentName = getIntent().getStringExtra("student_name");
 
@@ -38,29 +42,21 @@ public class ProfileViewActivity extends AppCompatActivity {
 
         String userClassesString = pref.getString(userName, "error_main_student_not_found");
         List<ClassData> userStudentClasses = BOFStudent.decodeClassData(userClassesString);
+         */
 
-        List<ClassData> sc = BOFSharedClasses.findSharedClasses(userStudentClasses, otherStudentClasses);
+        String sharedJson = getIntent().getStringExtra("student_name");
+        Log.i("ProfileViewActivity", "Getting this Json: " + sharedJson);
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(ClassData.class, new Deserializers.ClassDataDeserializer())
+                .registerTypeAdapter(Student.class, new Deserializers.StudentDeserializer())
+                .create();
+        SharedClasses shared = gson.fromJson(sharedJson, BOFSharedClasses.class);
+        Log.i("ProfileViewActivity", "What Gson did: " + shared.getOtherStudent().getName());
 
-        //?? how to get sharedclasses?
-        /*<ClassData> l1 = new ArrayList<ClassData>();
-        List<ClassData> l2 = new ArrayList<ClassData>();
-        ClassData c1 = new BOFClassData(2022,"WI","CSE","110");
-        l1.add(c1);
-        l2.add(c1);
-        ClassData c2 = new BOFClassData(2021,"FA","CSE","105");
-        l1.add(c2);
-        l2.add(c2);
-        ClassData c3 = new BOFClassData(2020,"SP","MATH","20A");
-        l1.add(c3);
-        ClassData c4 = new BOFClassData(2021,"SP","MATH","20A");
-        l2.add(c4);
 
-        Student s1 = new BOFStudent("s1","a",l1);
-        Student s2 = new BOFStudent("s2","b",l2);
+        List<ClassData> sc = shared.getSharedClasses();
 
-        SharedClasses sc = new BOFSharedClasses(s1,s2);*/
 
-        //change sharedclass data to be a list of BOFclassdata instead of list of classdata
         List<BOFClassData> bcd = new ArrayList<BOFClassData>();
         for (ClassData cd: sc)
             bcd.add((BOFClassData)cd);
@@ -74,7 +70,7 @@ public class ProfileViewActivity extends AppCompatActivity {
         BOFClassRecyclerView.setAdapter(classDataAdapter);
 
         TextView nt = findViewById(R.id.name_text);
-        nt.setText(studentName);
+        nt.setText(shared.getOtherStudent().getName());
     }
 
     public void onGoBackClicked(View view) {

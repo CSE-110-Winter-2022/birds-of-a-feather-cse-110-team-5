@@ -13,6 +13,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -45,9 +47,7 @@ public class ClassInputActivity extends AppCompatActivity {
         categories.add("SSS");
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
-
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         session_spinner.setAdapter(dataAdapter);
 
         //create spiiner choices for class size
@@ -67,7 +67,6 @@ public class ClassInputActivity extends AppCompatActivity {
 
 
         List<BOFClassData> classes = new ArrayList<BOFClassData>();
-        classes.add(0, new BOFClassData(2022, "FA", "CSE", "110","Large"));
         setTitle("Classes");
 
         BOFClassRecyclerView = findViewById(R.id.class_recyclerview);
@@ -178,12 +177,19 @@ public class ClassInputActivity extends AppCompatActivity {
     }
 
     public void onDoneButtonClicked(View view) {
+        if(main_user_classes.size() <= 0) {
+            return;
+        }
         SharedPreferences mainStudent = getSharedPreferences("mainStudent", MODE_PRIVATE);
         SharedPreferences.Editor edit = mainStudent.edit();
-        BOFStudent temp = new BOFStudent("temp", "temp", main_user_classes);
-        String mainUserClassString = temp.convertClassData();
-        edit.putString("classes", mainUserClassString);
-      Intent intent = new Intent(ClassInputActivity.this, MainActivity.class);
-     ClassInputActivity.this.startActivity(intent);
+        Student temp = new BOFStudent(mainStudent.getString("name", ""), mainStudent.getString("image", ""), main_user_classes);
+        //String mainUserClassString = temp.convertClassData();
+        Gson gson = new Gson();
+        String mainUser = gson.toJson(temp);
+        edit.putString("studentObject", mainUser);
+        edit.apply();
+        Log.i("ClassInputActivity", mainUser);
+        Intent intent = new Intent(ClassInputActivity.this, MainActivity.class);
+        ClassInputActivity.this.startActivity(intent);
     }
 }
