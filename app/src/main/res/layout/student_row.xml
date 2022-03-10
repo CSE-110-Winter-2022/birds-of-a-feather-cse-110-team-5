@@ -40,7 +40,7 @@
         app:srcCompat="@android:drawable/btn_star_big_off" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/wave_icon"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:translationX="260dp"

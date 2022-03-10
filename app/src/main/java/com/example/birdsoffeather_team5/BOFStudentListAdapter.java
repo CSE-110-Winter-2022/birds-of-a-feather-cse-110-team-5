@@ -110,12 +110,14 @@ public class BOFStudentListAdapter extends RecyclerView.Adapter<BOFStudentListAd
         private final ImageView pic;
         private final TextView name;
         private final TextView numShared;
+        private final ImageView wave;
         private SharedClasses sharedClasses;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             this.pic = itemView.findViewById(R.id.imageView);
             this.name = itemView.findViewById(R.id.other_name);
             this.numShared = itemView.findViewById(R.id.num_class);
+            this.wave = itemView.findViewById(R.id.wave_icon);
             itemView.setOnClickListener(this);
             itemView.findViewById(R.id.favoriteStar).setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -131,6 +133,7 @@ public class BOFStudentListAdapter extends RecyclerView.Adapter<BOFStudentListAd
             this.name.setText(sh.getOtherStudent().getName());
             this.numShared.setText("" + sh.getSharedClasses().size());
             sharedClasses = sh;
+            wave.setVisibility(sh.isOtherWaving() ? View.VISIBLE : View.GONE);
             Glide.with(itemView).load(sh.getOtherStudent().getURL()).error(R.drawable.ic_launcher_background).into(pic);
         }
 
