@@ -70,7 +70,6 @@ public class SortSmallClasses{
                 }
             }
         }
-
         ArrayList<SharedClasses> sharedClasses = new ArrayList<>();
         /*
         for (Student student: sortedStudents){
