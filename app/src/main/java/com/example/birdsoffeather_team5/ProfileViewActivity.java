@@ -1,6 +1,7 @@
 package com.example.birdsoffeather_team5;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.menu.MenuView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -8,8 +9,10 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -79,6 +82,9 @@ public class ProfileViewActivity extends AppCompatActivity {
 
         TextView nt = findViewById(R.id.name_text);
         nt.setText(shared.getOtherStudent().getName());
+
+        ImageView view = findViewById(R.id.url_image);
+        Glide.with(this).load(shared.getOtherStudent().getURL()).error(R.drawable.ic_launcher_background).into(view);
     }
 
     public void onGoBackClicked(View view) {
