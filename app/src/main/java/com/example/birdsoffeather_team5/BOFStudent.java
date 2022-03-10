@@ -8,6 +8,9 @@ public class BOFStudent implements Student{
     private String url;
     private List<ClassData> classData;
 
+    //this is for sorting algorithm. I'll remove it if I find other ways
+    private Student mainStudent;
+
 
     public BOFStudent(String name, String url, List<ClassData> classData) {
         this.name = name;
@@ -18,20 +21,21 @@ public class BOFStudent implements Student{
     public String getName() {return name;}
     public String getURL() {return url;}
     public List<ClassData> getClassData() {return classData;}
+
     public String convertClassData(){
         String answer = "";
         for(ClassData i : this.classData){
-            answer = answer.concat(i.getYear() + "," + i.getSession() + "," + i.getSubject() + "," + i.getCourseNum() + ",,");
+            answer = answer.concat(i.getYear() + "," + i.getSession() + "," + i.getSubject() + "," + i.getCourseNum() + "," + i.getClassSize() + ",,");
         }
         return answer;
     }
     public static List<ClassData> decodeClassData(String classData){
         List<ClassData> answer = new ArrayList<>();
-        BOFClassData temp = new BOFClassData(-1, "", "", "");
+        BOFClassData temp = new BOFClassData(-1, "", "", "","");
         String[] temp1 = classData.split(",,");
         for(int i = 0; i < temp1.length; i++){
             String[] holder = temp.decode(temp1[i]);
-            BOFClassData hold = new BOFClassData(Integer.parseInt(holder[0]), holder[1], holder[2], holder[3]);
+            BOFClassData hold = new BOFClassData(Integer.parseInt(holder[0]), holder[1], holder[2], holder[3], holder[4]);
             answer.add(hold);
         }
         return answer;

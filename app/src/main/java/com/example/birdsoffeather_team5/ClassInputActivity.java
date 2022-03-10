@@ -13,6 +13,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -30,10 +32,12 @@ public class ClassInputActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_class_input);
         Spinner session_spinner = (Spinner) findViewById(R.id.session_spinner);
+        Spinner class_size_spinner = (Spinner) findViewById(R.id.class_size_spinner);
 
         main_user_classes = new ArrayList<>();
         //session_spinner.setOnItemSelectedListener(this);
 
+        //create spinner choices for class session
         ArrayList<String> categories = new ArrayList<String>();
         categories.add("FA");
         categories.add("WI");
@@ -43,14 +47,26 @@ public class ClassInputActivity extends AppCompatActivity {
         categories.add("SSS");
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
-
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         session_spinner.setAdapter(dataAdapter);
+
+        //create spiiner choices for class size
+        ArrayList<String> categories2 = new ArrayList<String>();
+        categories2.add("Tiny (<40)");
+        categories2.add("Small (40-75)");
+        categories2.add("Medium (75-150)");
+        categories2.add("Large (150-250)");
+        categories2.add("Huge (250-400)");
+        categories2.add("Gigantic (400+)");
+
+        ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories2);
+
+        dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        class_size_spinner.setAdapter(dataAdapter2);
 
 
         List<BOFClassData> classes = new ArrayList<BOFClassData>();
-        classes.add(0, new BOFClassData(2022, "FA", "CSE", "110"));
         setTitle("Classes");
 
         BOFClassRecyclerView = findViewById(R.id.class_recyclerview);
@@ -94,6 +110,9 @@ public class ClassInputActivity extends AppCompatActivity {
                 Pattern.matches("\\d{1,3}[A-Z]{0,3}", courseNum);
     }
 
+    //returns true if class size is valid (class size is chose from a dropdown, so any non-null value is valid)
+    private boolean isValidClassSize(String classSize) {return classSize != null;}
+
     public void onEnterButtonClicked(View view) {
         //get the year
         TextView yearView = findViewById(R.id.year_input);
@@ -133,7 +152,14 @@ public class ClassInputActivity extends AppCompatActivity {
             return;
         }
 
-        BOFClassData newClassData = new BOFClassData(year, session, subject, courseNum);
+        Spinner classSizeView = findViewById(R.id.class_size_spinner);
+        String classSize = classSizeView.getSelectedItem().toString();
+        if(!isValidClassSize(classSize)) {
+            //alert
+            return;
+        }
+
+        BOFClassData newClassData = new BOFClassData(year, session, subject, courseNum,classSize);
 
         //need to use ClassDataAdapter add method
         classDataAdapter.addClass(newClassData);
@@ -151,12 +177,19 @@ public class ClassInputActivity extends AppCompatActivity {
     }
 
     public void onDoneButtonClicked(View view) {
+        if(main_user_classes.size() <= 0) {
+            return;
+        }
         SharedPreferences mainStudent = getSharedPreferences("mainStudent", MODE_PRIVATE);
         SharedPreferences.Editor edit = mainStudent.edit();
-        BOFStudent temp = new BOFStudent("temp", "temp", main_user_classes);
-        String mainUserClassString = temp.convertClassData();
-        edit.putString("classes", mainUserClassString);
-      Intent intent = new Intent(ClassInputActivity.this, MainActivity.class);
-     ClassInputActivity.this.startActivity(intent);
+        Student temp = new BOFStudent(mainStudent.getString("name", ""), mainStudent.getString("image", ""), main_user_classes);
+        //String mainUserClassString = temp.convertClassData();
+        Gson gson = new Gson();
+        String mainUser = gson.toJson(temp);
+        edit.putString("studentObject", mainUser);
+        edit.apply();
+        Log.i("ClassInputActivity", mainUser);
+        Intent intent = new Intent(ClassInputActivity.this, MainActivity.class);
+        ClassInputActivity.this.startActivity(intent);
     }
 }

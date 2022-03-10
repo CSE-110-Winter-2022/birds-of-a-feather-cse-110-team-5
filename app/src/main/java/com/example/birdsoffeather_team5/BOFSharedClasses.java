@@ -27,17 +27,16 @@ public class BOFSharedClasses extends SharedClasses{
         return sharedClasses;
     }
 
-    public Student getMainStudent() {
-        return mainStudent;
-    }
     public Student getOtherStudent() {
         return otherStudent;
     }
+
 
     @Override
     public int compareTo(SharedClasses sharedClasses) {
         return this.getSharedClasses().size() - sharedClasses.getSharedClasses().size();
     }
+
 
     public static List<ClassData> findSharedClasses(List<ClassData> c1, List<ClassData> c2)
     {

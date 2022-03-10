@@ -15,11 +15,11 @@ public class BOFSharedClassesTest extends TestCase {
 
     @Before
     public void setUp() {
-        c1 = new BOFClassData(2022, "FA", "CSE", "110");
-        c1Copy = new BOFClassData(2022, "FA", "CSE", "110");
+        c1 = new BOFClassData(2022, "FA", "CSE", "110","Large");
+        c1Copy = new BOFClassData(2022, "FA", "CSE", "110","Large");
 
-        c2 = new BOFClassData(2020, "SP", "POLI", "28");
-        c3 = new BOFClassData(2021, "WI", "CSE", "120");
+        c2 = new BOFClassData(2020, "SP", "POLI", "28","Small");
+        c3 = new BOFClassData(2021, "WI", "CSE", "120","Large");
     }
 
     public void testFindOneSharedClassDiffCopy() {

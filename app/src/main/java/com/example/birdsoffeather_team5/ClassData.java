@@ -5,9 +5,12 @@ public interface ClassData{
     public String getSession();
     public String getSubject();
     public String getCourseNum();
+    public String getClassSize();
+    public int getSessionNum();
 
     public void setYear(int y);
     public void setSession(String s);
     public void setSubject(String s);
     public void setCourseNum(String c);
+    public void setClassSize(String c);
 }
