@@ -1,24 +1,18 @@
 package com.example.birdsoffeather_team5;
 
-import static android.content.Context.MODE_PRIVATE;
-
-import android.content.SharedPreferences;
 import android.util.Log;
 import android.util.Pair;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 
 //SortSmallClasses.sortBySmall()
 
 public class SortSmallClasses{
-    public static ArrayList<BOFSharedClasses> sortBySmall(ArrayList<BOFStudent> userProfiles, BOFStudent mainStudent){
-        ArrayList<BOFStudent> sortedStudents = new ArrayList<>();
+    public static ArrayList<SharedClasses> sortBySmall(List<Student> userProfiles, Student mainStudent){
+        ArrayList<Student> sortedStudents = new ArrayList<>();
         HashMap<Integer, Pair<Integer, String>> count = new HashMap<>();
         for(int i = 0; i < userProfiles.size(); i++){
             BOFSharedClasses temp = new BOFSharedClasses(mainStudent, userProfiles.get(i));
@@ -58,7 +52,7 @@ public class SortSmallClasses{
             for(int j = 0; j < sortedStudents.size() - 1; j++){
                 if(Double.parseDouble(sortHelper.get(j).second) == Double.parseDouble(sortHelper.get(j+1).second)){
                     if(sortHelper.get(j).first.intValue() < sortHelper.get(j+1).first.intValue()){
-                        BOFStudent studentTemp = sortedStudents.get(j);
+                        Student studentTemp = sortedStudents.get(j);
                         Pair<Integer, String> weightTemp = sortHelper.get(j);
                         sortedStudents.set(j, sortedStudents.get(j+1));
                         sortedStudents.set(j+1, studentTemp);
@@ -67,7 +61,7 @@ public class SortSmallClasses{
                     }
                 }
                 else if(Double.parseDouble(sortHelper.get(j).second) > Double.parseDouble(sortHelper.get(j+1).second)){
-                    BOFStudent studentTemp = sortedStudents.get(j);
+                    Student studentTemp = sortedStudents.get(j);
                     Pair<Integer, String> weightTemp = sortHelper.get(j);
                     sortedStudents.set(j, sortedStudents.get(j+1));
                     sortedStudents.set(j+1, studentTemp);
@@ -88,6 +82,7 @@ public class SortSmallClasses{
             BOFSharedClasses temp = new BOFSharedClasses(mainStudent, sortedStudents.get(sortedStudents.size() - i -1));
             sharedClasses.add(temp);
         }
+        Log.i("Check the size of sortedStudent", String.valueOf(sharedClasses.size()));
         return sharedClasses;
     }
 }

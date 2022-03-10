@@ -10,4 +10,5 @@ public interface Student {
     public void setName(String n);
     public void setURL(String u);
     public void setClassData(List<ClassData> c);
+
 }
