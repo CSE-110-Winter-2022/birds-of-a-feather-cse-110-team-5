@@ -11,25 +11,21 @@
         android:layout_width="99dp"
         android:layout_height="50dp"
         android:layout_marginStart="76dp"
-        android:layout_marginEnd="30dp"
         android:layout_marginBottom="16dp"
         android:onClick="onEnterButtonClicked"
         android:text="Enter"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/done_button"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/year_input"
         android:layout_width="200dp"
         android:layout_height="40dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
         android:ems="10"
         android:inputType="number"
         app:layout_constraintBottom_toTopOf="@+id/session_spinner"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.982" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/textView3"
@@ -43,17 +39,40 @@
         app:layout_constraintBottom_toTopOf="@+id/textView6"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="16dp"
+        android:text="Quarter"
+        android:textAlignment="center"
+        app:flow_horizontalAlign="center"
+        app:flow_verticalAlign="center"
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <Spinner
         android:id="@+id/session_spinner"
         android:layout_width="200dp"
         android:layout_height="40dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="16dp"
         android:backgroundTintMode="add"
         android:foregroundTintMode="add"
         android:spinnerMode="dropdown"
         android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/subject_input"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Spinner
+        android:id="@+id/class_size_spinner"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTintMode="add"
+        android:foregroundTintMode="add"
+        android:spinnerMode="dropdown"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/done_button"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
@@ -66,7 +85,6 @@
         app:flow_horizontalAlign="center"
         app:flow_verticalAlign="center"
         app:layout_constraintBottom_toTopOf="@+id/textView3"
-        app:layout_constraintEnd_toStartOf="@+id/year_input"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -78,7 +96,7 @@
         android:textAlignment="center"
         app:flow_horizontalAlign="center"
         app:flow_verticalAlign="center"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -125,14 +143,13 @@
         android:layout_marginBottom="72dp"
         android:ems="10"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toTopOf="@+id/class_size_spinner"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <EditText
         android:id="@+id/subject_input"
         android:layout_width="200dp"
         android:layout_height="40dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
         android:ems="10"
         android:inputType="textPersonName"
@@ -156,13 +173,11 @@
         android:id="@+id/done_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="85dp"
+        android:layout_marginEnd="76dp"
         android:layout_marginBottom="16dp"
-        android:text="Done"
         android:onClick="onDoneButtonClicked"
+        android:text="Done"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
