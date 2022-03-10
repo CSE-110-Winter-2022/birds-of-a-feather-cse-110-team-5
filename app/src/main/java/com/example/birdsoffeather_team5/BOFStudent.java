@@ -51,4 +51,5 @@ public class BOFStudent implements Student{
     public void setURL(String u) {url = u;}
     public void setClassData(List<ClassData> c) {classData = c;}
     public void setID(String i) {id = i;}
+    public void setWaves(List<String> w) {waves = w;}
 }

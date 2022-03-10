@@ -85,26 +85,37 @@ public class MockMessageListener extends MessageListener {
 
     public Student extractSingleUser(Scanner sc) {
 
+        //get id
+        String id = sc.nextLine(); id = id.substring(0, id.length() - 4);
         //get name
         String name = sc.nextLine(); name = name.substring(0, name.length() - 4);
         //get url
         String url = sc.nextLine(); url = url.substring(0, url.length() - 4);
 
-        //get classes
+        //get classes and waves
         List<ClassData> classes = new ArrayList<>();
+        List<String> waves = new ArrayList<String>();
         while(sc.hasNextLine()) {
-            String currClass = sc.nextLine();
-            String[] currClassSplit = currClass.split(",");
-            ClassData c = new BOFClassData(
-                    Integer.parseInt(currClassSplit[0]),
-                    currClassSplit[1],
-                    currClassSplit[2],
-                    currClassSplit[3],
-                    currClassSplit[4]);
-            classes.add(c);
+            String currLine = sc.nextLine();
+            String[] currLineSplit = currLine.split(",");
+            if (currLineSplit[1].equals("wave"))
+            {
+                waves.add(currLineSplit[0]);
+            }
+            else
+            {
+                ClassData c = new BOFClassData(
+                        Integer.parseInt(currLineSplit[0]),
+                        currLineSplit[1],
+                        currLineSplit[2],
+                        currLineSplit[3],
+                        currLineSplit[4]);
+                classes.add(c);
+            }
         }
 
-        Student stu = new BOFStudent(name, url, classes, "default_id");
+        Student stu = new BOFStudent(name, url, classes, id);
+        stu.setWaves(waves);
         Log.i("Mock", "name: " + stu.getName() + " url: " + stu.getURL());
         Log.i("Mock", stu.getClassData().toString());
         return stu;

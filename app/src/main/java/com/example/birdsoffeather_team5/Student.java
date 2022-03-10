@@ -13,4 +13,5 @@ public interface Student {
     public void setURL(String u);
     public void setClassData(List<ClassData> c);
     public void setID(String i);
+    public void setWaves(List<String> w);
 }
