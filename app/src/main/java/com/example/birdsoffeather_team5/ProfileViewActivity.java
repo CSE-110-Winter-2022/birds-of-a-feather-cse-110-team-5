@@ -22,6 +22,7 @@ public class ProfileViewActivity extends AppCompatActivity {
     private RecyclerView BOFClassRecyclerView;
     private LinearLayoutManager BOFClassLayoutManager;
     private BOFClassDataAdapter classDataAdapter;
+    private Student student;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,8 @@ public class ProfileViewActivity extends AppCompatActivity {
         SharedClasses shared = gson.fromJson(sharedJson, BOFSharedClasses.class);
         Log.i("ProfileViewActivity", "What Gson did: " + shared.getOtherStudent().getName());
 
+        student = shared.getOtherStudent();
+
 
         List<ClassData> sc = shared.getSharedClasses();
 
@@ -76,5 +79,10 @@ public class ProfileViewActivity extends AppCompatActivity {
     public void onGoBackClicked(View view) {
         Log.i("ProfileViewActivity", "ProfileViewActivity closing");
         finish();
+    }
+
+    public void onWaveClicked(View view) {
+        Log.i("ProfileViewActivity", "Waved to " + student.getName());
+        //TODO: send wave functionality
     }
 }
