@@ -13,8 +13,6 @@ import com.google.android.gms.nearby.messages.Message;
 import com.google.android.gms.nearby.messages.MessageListener;
 import com.google.gson.Gson;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -106,7 +104,7 @@ public class MockMessageListener extends MessageListener {
             classes.add(c);
         }
 
-        Student stu = new BOFStudent(name, url, classes);
+        Student stu = new BOFStudent(name, url, classes, "default_id");
         Log.i("Mock", "name: " + stu.getName() + " url: " + stu.getURL());
         Log.i("Mock", stu.getClassData().toString());
         return stu;

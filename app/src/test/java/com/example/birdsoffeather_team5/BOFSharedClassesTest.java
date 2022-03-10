@@ -28,8 +28,8 @@ public class BOFSharedClassesTest extends TestCase {
 
         List<ClassData> student1List = new ArrayList<>(); student1List.add(c1);
         List<ClassData> student2List = new ArrayList<>(); student2List.add(c1Copy);
-        Student student1 = new BOFStudent("temp1", "temp1", student1List);
-        Student student2 = new BOFStudent("temp2", "temp2", student2List);
+        Student student1 = new BOFStudent("temp1", "temp1", student1List, "default_id");
+        Student student2 = new BOFStudent("temp2", "temp2", student2List, "default_id");
 
         List<ClassData> actualShared = BOFSharedClasses.findSharedClasses(student1, student2);
 
@@ -42,8 +42,8 @@ public class BOFSharedClassesTest extends TestCase {
 
         List<ClassData> student1List = new ArrayList<>(); student1List.add(c1);
         List<ClassData> student2List = new ArrayList<>(); student2List.add(c1);
-        Student student1 = new BOFStudent("temp1", "temp1", student1List);
-        Student student2 = new BOFStudent("temp2", "temp2", student2List);
+        Student student1 = new BOFStudent("temp1", "temp1", student1List, "default_id");
+        Student student2 = new BOFStudent("temp2", "temp2", student2List, "default_id");
 
         List<ClassData> actualShared = BOFSharedClasses.findSharedClasses(student1, student2);
 
@@ -59,8 +59,8 @@ public class BOFSharedClassesTest extends TestCase {
         List<ClassData> student2List = new ArrayList<>();
         student2List.add(c1); student2List.add(c2);
 
-        Student student1 = new BOFStudent("temp1", "temp1", student1List);
-        Student student2 = new BOFStudent("temp2", "temp2", student2List);
+        Student student1 = new BOFStudent("temp1", "temp1", student1List, "default_id");
+        Student student2 = new BOFStudent("temp2", "temp2", student2List, "default_id");
 
         List<ClassData> actualShared = BOFSharedClasses.findSharedClasses(student1, student2);
 
@@ -73,8 +73,8 @@ public class BOFSharedClassesTest extends TestCase {
         List<ClassData> student1List = new ArrayList<>(); student1List.add(c1);
         List<ClassData> student2List = new ArrayList<>(); student2List.add(c2);
 
-        Student student1 = new BOFStudent("temp1", "temp1", student1List);
-        Student student2 = new BOFStudent("temp2", "temp2", student2List);
+        Student student1 = new BOFStudent("temp1", "temp1", student1List, "default_id");
+        Student student2 = new BOFStudent("temp2", "temp2", student2List, "default_id");
 
         List<ClassData> actualShared = BOFSharedClasses.findSharedClasses(student1, student2);
 
@@ -90,8 +90,8 @@ public class BOFSharedClassesTest extends TestCase {
         List<ClassData> student2List = new ArrayList<>();
         student2List.add(c2); student2List.add(c3);
 
-        Student student1 = new BOFStudent("temp1", "temp1", student1List);
-        Student student2 = new BOFStudent("temp2", "temp2", student2List);
+        Student student1 = new BOFStudent("temp1", "temp1", student1List, "default_id");
+        Student student2 = new BOFStudent("temp2", "temp2", student2List, "default_id");
 
         List<ClassData> actualShared = BOFSharedClasses.findSharedClasses(student1, student2);
 

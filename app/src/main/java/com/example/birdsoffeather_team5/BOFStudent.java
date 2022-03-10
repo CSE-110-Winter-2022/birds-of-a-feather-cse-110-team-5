@@ -7,20 +7,23 @@ public class BOFStudent implements Student{
     private String name;
     private String url;
     private List<ClassData> classData;
+    private String id;
 
     //this is for sorting algorithm. I'll remove it if I find other ways
     private Student mainStudent;
 
 
-    public BOFStudent(String name, String url, List<ClassData> classData) {
+    public BOFStudent(String name, String url, List<ClassData> classData, String id) {
         this.name = name;
         this.url = url;
         this.classData = classData;
+        this.id = id;
     }
 
     public String getName() {return name;}
     public String getURL() {return url;}
     public List<ClassData> getClassData() {return classData;}
+    public String getID() {return id;}
 
     public String convertClassData(){
         String answer = "";
@@ -44,4 +47,5 @@ public class BOFStudent implements Student{
     public void setName(String n) {name = n;}
     public void setURL(String u) {url = u;}
     public void setClassData(List<ClassData> c) {classData = c;}
+    public void setID(String i) {id = i;}
 }
