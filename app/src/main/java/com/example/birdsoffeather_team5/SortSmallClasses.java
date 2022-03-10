@@ -70,8 +70,7 @@ public class SortSmallClasses{
                 }
             }
         }
-
-        ArrayList<SharedClasses> sharedClasses = new ArrayList<>();
+        ArrayList<BOFSharedClasses> sharedClasses = new ArrayList<>();
         /*
         for (Student student: sortedStudents){
             SharedClasses temp = new BOFSharedClasses(mainStudent, student);
@@ -80,7 +79,7 @@ public class SortSmallClasses{
         */
 
         for (int i = 0; i < sortedStudents.size(); i++){
-            SharedClasses temp = new BOFSharedClasses(mainStudent, sortedStudents.get(sortedStudents.size() - i -1));
+            BOFSharedClasses temp = new BOFSharedClasses(mainStudent, sortedStudents.get(sortedStudents.size() - i -1));
             sharedClasses.add(temp);
         }
         Log.i("Check the size of sortedStudent", String.valueOf(sharedClasses.size()));
