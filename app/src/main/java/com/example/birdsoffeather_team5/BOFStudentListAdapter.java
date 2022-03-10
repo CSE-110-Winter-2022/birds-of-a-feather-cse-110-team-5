@@ -64,17 +64,38 @@ public class BOFStudentListAdapter extends RecyclerView.Adapter<BOFStudentListAd
             case "Default":
                 Collections.sort(sharedClassesList);
                 Collections.reverse(sharedClassesList);
-                notifyDataSetChanged();
+                //notifyDataSetChanged();
                 break;
             case "SortBySmall":
                 sharedClassesList = SortSmallClasses.sortBySmall(students, mainStudent);
-                notifyDataSetChanged();
+                //notifyDataSetChanged();
                 break;
             case "SortByRecent":
                 sharedClassesList = SortRecentClasses.sortByRecent(students, mainStudent);
-                notifyDataSetChanged();
+                //notifyDataSetChanged();
                 break;
         }
+        //move student who are waving to you to the top, but maintain ordering within those
+        //iterate over the list backwards,
+        SharedClasses firstWave = null;
+        for (int i = sharedClassesList.size() - 1; i >= 0; i--)
+        {
+            //if the current index is waving,
+            if (sharedClassesList.get(i).isOtherWaving())
+            {
+                //if the first wave is seen again, stop.
+                if (firstWave == sharedClassesList.get(i))
+                    break;
+                if (firstWave == null)
+                    firstWave = sharedClassesList.get(i);
+                //send it to the front
+                sharedClassesList.add(0,sharedClassesList.remove(i));
+                //(adjust index to not skip any)
+                i++;
+            }
+        }
+
+        notifyDataSetChanged();
     }
 
     public void addNewStudent(SharedClasses sh) {
