@@ -17,6 +17,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import android.widget.Toast;
+
 public class ProfileViewActivity extends AppCompatActivity {
 
     private RecyclerView BOFClassRecyclerView;
@@ -83,6 +88,21 @@ public class ProfileViewActivity extends AppCompatActivity {
 
     public void onWaveClicked(View view) {
         Log.i("ProfileViewActivity", "Waved to " + student.getName());
-        //TODO: send wave functionality
+
+        //toast notification
+        Toast.makeText(view.getContext(), "Sent Wave", Toast.LENGTH_SHORT).show();
+
+        //determine the main student from shared preferences
+        SharedPreferences mainStudentPref = getSharedPreferences("mainStudent", MODE_PRIVATE);
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(ClassData.class, new Deserializers.ClassDataDeserializer())
+                .create();
+        String mainStudentStr = mainStudentPref.getString("studentObject", "");
+        Log.i("ProfileViewActivity", "mainStudentSTR: " + mainStudentStr);
+        Student mainStudent = gson.fromJson(mainStudentStr, BOFStudent.class);
+        Log.i("ProfileViewActivity", "mainStudent made" + mainStudent.getClassData().toString());
+
+        //add the viewed student's id to the main student's wave list
+        mainStudent.getWaves().add(student.getID());
     }
 }
