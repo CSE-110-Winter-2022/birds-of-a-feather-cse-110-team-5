@@ -32,12 +32,11 @@ public class ClassInputActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_class_input);
         Spinner session_spinner = (Spinner) findViewById(R.id.session_spinner);
-        Spinner class_size_spinner = (Spinner) findViewById(R.id.class_size_spinner);
+        Spinner size_spinner = (Spinner) findViewById(R.id.class_size_spinner);
 
         main_user_classes = new ArrayList<>();
         //session_spinner.setOnItemSelectedListener(this);
 
-        //create spinner choices for class session
         ArrayList<String> categories = new ArrayList<String>();
         categories.add("FA");
         categories.add("WI");
@@ -50,20 +49,17 @@ public class ClassInputActivity extends AppCompatActivity {
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         session_spinner.setAdapter(dataAdapter);
 
-        //create spiiner choices for class size
-        ArrayList<String> categories2 = new ArrayList<String>();
-        categories2.add("Tiny (<40)");
-        categories2.add("Small (40-75)");
-        categories2.add("Medium (75-150)");
-        categories2.add("Large (150-250)");
-        categories2.add("Huge (250-400)");
-        categories2.add("Gigantic (400+)");
+        ArrayList<String> sizeCategories = new ArrayList<>();
+        sizeCategories.add("Tiny");
+        sizeCategories.add("Small");
+        sizeCategories.add("Medium");
+        sizeCategories.add("Large");
+        sizeCategories.add("Huge");
+        sizeCategories.add("Gigantic");
 
-        ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories2);
-
-        dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        class_size_spinner.setAdapter(dataAdapter2);
+        ArrayAdapter<String> sizeDataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, sizeCategories);
+        sizeDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        size_spinner.setAdapter(sizeDataAdapter);
 
 
         List<BOFClassData> classes = new ArrayList<BOFClassData>();
@@ -110,8 +106,9 @@ public class ClassInputActivity extends AppCompatActivity {
                 Pattern.matches("\\d{1,3}[A-Z]{0,3}", courseNum);
     }
 
-    //returns true if class size is valid (class size is chose from a dropdown, so any non-null value is valid)
-    private boolean isValidClassSize(String classSize) {return classSize != null;}
+    private boolean isValidClassSize(String classSize) {
+        return classSize != null;
+    }
 
     public void onEnterButtonClicked(View view) {
         //get the year
@@ -152,14 +149,13 @@ public class ClassInputActivity extends AppCompatActivity {
             return;
         }
 
-        Spinner classSizeView = findViewById(R.id.class_size_spinner);
-        String classSize = classSizeView.getSelectedItem().toString();
-        if(!isValidClassSize(classSize)) {
-            //alert
+        Spinner sizeView = findViewById(R.id.class_size_spinner);
+        String size = sizeView.getSelectedItem().toString();
+        if(!isValidClassSize(size)) {
             return;
         }
 
-        BOFClassData newClassData = new BOFClassData(year, session, subject, courseNum,classSize);
+        BOFClassData newClassData = new BOFClassData(year, session, subject, courseNum, size);
 
         //need to use ClassDataAdapter add method
         classDataAdapter.addClass(newClassData);
@@ -182,7 +178,7 @@ public class ClassInputActivity extends AppCompatActivity {
         }
         SharedPreferences mainStudent = getSharedPreferences("mainStudent", MODE_PRIVATE);
         SharedPreferences.Editor edit = mainStudent.edit();
-        Student temp = new BOFStudent(mainStudent.getString("name", ""), mainStudent.getString("image", ""), main_user_classes, "default_id");
+        Student temp = new BOFStudent(mainStudent.getString("name", ""), mainStudent.getString("image", ""), main_user_classes,"default_id");
         //String mainUserClassString = temp.convertClassData();
         Gson gson = new Gson();
         String mainUser = gson.toJson(temp);
