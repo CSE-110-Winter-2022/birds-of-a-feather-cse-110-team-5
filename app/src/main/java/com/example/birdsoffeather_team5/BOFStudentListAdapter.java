@@ -73,12 +73,16 @@ public class BOFStudentListAdapter extends RecyclerView.Adapter<BOFStudentListAd
     }
 
     public void addNewStudent(SharedClasses sh) {
+        Log.i("BOFStudentListAdapter", "adding new student");
         if(students.contains(sh.getOtherStudent())) {
+            Log.i("BOFStudentListAdapter", "new student exists");
             return;
         }
         students.add(sh.getOtherStudent());
+        Log.i("BOFStudentListAdapter", "added to sh");
         switch(sortBy) {
             case "Default":
+                sharedClassesList.add(sh);
                 Collections.sort(sharedClassesList);
                 Collections.reverse(sharedClassesList);
                 break;
