@@ -40,6 +40,10 @@ public class SessionSaver {
         SharedPreferences sessionPref = context.getSharedPreferences("sessions", context.MODE_PRIVATE);
         String sessionStr = sessionPref.getString(sessionName, "");
 
+        if(sessionStr.equals("")) {
+            return new ArrayList<SharedClasses>();
+        }
+
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(ClassData.class, new Deserializers.ClassDataDeserializer())
                 .registerTypeAdapter(Student.class, new Deserializers.StudentDeserializer())

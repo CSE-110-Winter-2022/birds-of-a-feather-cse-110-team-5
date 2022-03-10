@@ -30,4 +30,12 @@
         android:layout_height="wrap_content"
         android:text="ClassNum"
         android:layout_gravity="right|center"/>
+
+    <ImageButton
+        android:id="@+id/favoriteStar"
+        android:layout_width="29dp"
+        android:layout_height="31dp"
+        android:layout_gravity="right|center"
+        android:translationX="-70sp"
+        app:srcCompat="@android:drawable/btn_star_big_off" />
 </FrameLayout>

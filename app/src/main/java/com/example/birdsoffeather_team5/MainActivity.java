@@ -5,11 +5,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -67,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         BOFStudentRecyclerView.setLayoutManager(BOFStudentLayoutManager);
 
-        studentListAdapter = new BOFStudentListAdapter(students, sharedClassesList, mainStudent);
+        studentListAdapter = new BOFStudentListAdapter(this, students, sharedClassesList, mainStudent);
         BOFStudentRecyclerView.setAdapter(studentListAdapter);
 
 
@@ -121,6 +125,20 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             messageListener.onFound(new Message("mock".getBytes(StandardCharsets.UTF_8)));
         } else {
             Log.i("MainActivity", "Query stopped");
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            final EditText input = new EditText(this);
+            input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
+            builder.setView(input);
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    String sessionName = input.getText().toString();
+                    SessionSaver.saveEntireSession(getApplicationContext(), sessionName, studentListAdapter.getSharedClassesList());
+                    //save list of sessions
+                }
+            });
+
             Nearby.getMessagesClient(this).unpublish(new Message(mainStudentStr.getBytes(StandardCharsets.UTF_8)));
             Nearby.getMessagesClient(this).unsubscribe(messageListener);
             buttonText.setText("Start");
