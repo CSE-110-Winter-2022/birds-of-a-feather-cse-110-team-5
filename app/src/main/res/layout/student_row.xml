@@ -43,7 +43,7 @@
         android:id="@+id/imageView2"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:translationX="275dp"
+        android:translationX="260dp"
         android:translationY="25dp"
         app:srcCompat="@android:drawable/ic_menu_myplaces" />
 </FrameLayout>
