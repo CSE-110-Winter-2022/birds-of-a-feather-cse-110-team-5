@@ -21,10 +21,13 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 public class BOFStudentListAdapter extends RecyclerView.Adapter<BOFStudentListAdapter.ViewHolder> {
     private List<Student> students;
+    private HashMap<String, Student> idStudentMap;
+    private HashMap<String, SharedClasses> idSharedMap;
     private List<SharedClasses> sharedClassesList;
     private Student mainStudent;
     private String sortBy;
@@ -37,6 +40,8 @@ public class BOFStudentListAdapter extends RecyclerView.Adapter<BOFStudentListAd
         this.mainStudent = mainStudent;
         this.sortBy = "Default";
         this.context = context;
+        idStudentMap = new HashMap<String,Student>();
+        idSharedMap = new HashMap<String,SharedClasses>();
     }
 
     @NonNull
@@ -64,30 +69,59 @@ public class BOFStudentListAdapter extends RecyclerView.Adapter<BOFStudentListAd
             case "Default":
                 Collections.sort(sharedClassesList);
                 Collections.reverse(sharedClassesList);
-                notifyDataSetChanged();
+                //notifyDataSetChanged();
                 break;
             case "SortBySmall":
                 sharedClassesList = SortSmallClasses.sortBySmall(students, mainStudent);
-                notifyDataSetChanged();
+                //notifyDataSetChanged();
                 break;
             case "SortByRecent":
                 sharedClassesList = SortRecentClasses.sortByRecent(students, mainStudent);
-                notifyDataSetChanged();
+                //notifyDataSetChanged();
                 break;
         }
+        //move student who are waving to you to the top, but maintain ordering within those
+        //iterate over the list backwards,
+        SharedClasses firstWave = null;
+        for (int i = sharedClassesList.size() - 1; i >= 0; i--)
+        {
+            //if the current index is waving,
+            if (sharedClassesList.get(i).isOtherWaving())
+            {
+                //if the first wave is seen again, stop.
+                if (firstWave == sharedClassesList.get(i))
+                    break;
+                if (firstWave == null)
+                    firstWave = sharedClassesList.get(i);
+                //send it to the front
+                sharedClassesList.add(0,sharedClassesList.remove(i));
+                //(adjust index to not skip any)
+                i++;
+            }
+        }
+
+        notifyDataSetChanged();
     }
 
     public void addNewStudent(SharedClasses sh) {
         Log.i("BOFStudentListAdapter", "adding new student");
-        if(students.contains(sh.getOtherStudent())) {
+        String id = sh.getOtherStudent().getID();
+        if (idStudentMap.containsKey(id)) {
             Log.i("BOFStudentListAdapter", "new student exists");
-            return;
+            students.remove(idStudentMap.get(id));
+            sharedClassesList.remove(idSharedMap.get(id));
+            idStudentMap.remove(id);
+            idSharedMap.remove(id);
+            //addNewStudent(sh);
+            //return;
         }
         students.add(sh.getOtherStudent());
+        idStudentMap.put(id,sh.getOtherStudent());
         Log.i("BOFStudentListAdapter", "added to sh");
+        sharedClassesList.add(sh);
+        idSharedMap.put(id,sh);
         switch(sortBy) {
             case "Default":
-                sharedClassesList.add(sh);
                 Collections.sort(sharedClassesList);
                 Collections.reverse(sharedClassesList);
                 break;
@@ -98,7 +132,8 @@ public class BOFStudentListAdapter extends RecyclerView.Adapter<BOFStudentListAd
                 sharedClassesList = SortRecentClasses.sortByRecent(students, mainStudent);
                 break;
         }
-        this.notifyItemInserted(sharedClassesList.indexOf(sh));
+        //this.notifyItemInserted(sharedClassesList.indexOf(sh));
+        this.notifyDataSetChanged();
         SessionSaver.updateCurrentSession(context, sharedClassesList);
     }
 
@@ -110,12 +145,14 @@ public class BOFStudentListAdapter extends RecyclerView.Adapter<BOFStudentListAd
         private final ImageView pic;
         private final TextView name;
         private final TextView numShared;
+        private final ImageView wave;
         private SharedClasses sharedClasses;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             this.pic = itemView.findViewById(R.id.imageView);
             this.name = itemView.findViewById(R.id.other_name);
             this.numShared = itemView.findViewById(R.id.num_class);
+            this.wave = itemView.findViewById(R.id.wave_icon);
             itemView.setOnClickListener(this);
             itemView.findViewById(R.id.favoriteStar).setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -131,6 +168,7 @@ public class BOFStudentListAdapter extends RecyclerView.Adapter<BOFStudentListAd
             this.name.setText(sh.getOtherStudent().getName());
             this.numShared.setText("" + sh.getSharedClasses().size());
             sharedClasses = sh;
+            wave.setVisibility(sh.isOtherWaving() ? View.VISIBLE : View.GONE);
             Glide.with(itemView).load(sh.getOtherStudent().getURL()).error(R.drawable.ic_launcher_background).into(pic);
         }
 

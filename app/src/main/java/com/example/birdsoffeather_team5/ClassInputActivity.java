@@ -178,7 +178,7 @@ public class ClassInputActivity extends AppCompatActivity {
         }
         SharedPreferences mainStudent = getSharedPreferences("mainStudent", MODE_PRIVATE);
         SharedPreferences.Editor edit = mainStudent.edit();
-        Student temp = new BOFStudent(mainStudent.getString("name", ""), mainStudent.getString("image", ""), main_user_classes,"default_id");
+        Student temp = new BOFStudent(mainStudent.getString("name", ""), mainStudent.getString("image", ""), main_user_classes,"4b295157-ba31-4f9f-8401-5d85d9cf659a");
         //String mainUserClassString = temp.convertClassData();
         Gson gson = new Gson();
         String mainUser = gson.toJson(temp);

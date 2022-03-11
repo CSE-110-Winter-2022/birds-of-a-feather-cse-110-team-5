@@ -8,6 +8,7 @@ public class BOFStudent implements Student{
     private String url;
     private List<ClassData> classData;
     private String id;
+    private List<String> waves;
 
     //this is for sorting algorithm. I'll remove it if I find other ways
     private Student mainStudent;
@@ -18,12 +19,14 @@ public class BOFStudent implements Student{
         this.url = url;
         this.classData = classData;
         this.id = id;
+        this.waves = new ArrayList<String>();
     }
 
     public String getName() {return name;}
     public String getURL() {return url;}
     public List<ClassData> getClassData() {return classData;}
     public String getID() {return id;}
+    public List<String> getWaves() {return waves;}
 
     public String convertClassData(){
         String answer = "";
@@ -48,4 +51,5 @@ public class BOFStudent implements Student{
     public void setURL(String u) {url = u;}
     public void setClassData(List<ClassData> c) {classData = c;}
     public void setID(String i) {id = i;}
+    public void setWaves(List<String> w) {waves = w;}
 }

@@ -7,12 +7,14 @@ public class BOFSharedClasses extends SharedClasses{
     private Student mainStudent;
     private Student otherStudent;
     private List<ClassData> sharedClasses;
+    private boolean isOtherWaving;
 
     public BOFSharedClasses(Student mainStudent, Student otherStudent) {
         this.mainStudent = mainStudent;
         this.otherStudent = otherStudent;
 
         sharedClasses = findSharedClasses(mainStudent, otherStudent);
+        isOtherWaving = otherStudent.getWaves().contains(mainStudent.getID());
     }
 
     public static List<ClassData> findSharedClasses(Student s1, Student s2) {
@@ -30,6 +32,8 @@ public class BOFSharedClasses extends SharedClasses{
     public Student getOtherStudent() {
         return otherStudent;
     }
+
+    public boolean isOtherWaving() {return isOtherWaving;}
 
 
     @Override
