@@ -21,10 +21,13 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 public class BOFStudentListAdapter extends RecyclerView.Adapter<BOFStudentListAdapter.ViewHolder> {
     private List<Student> students;
+    private HashMap<String, Student> idStudentMap;
+    private HashMap<String, SharedClasses> idSharedMap;
     private List<SharedClasses> sharedClassesList;
     private Student mainStudent;
     private String sortBy;
@@ -37,6 +40,8 @@ public class BOFStudentListAdapter extends RecyclerView.Adapter<BOFStudentListAd
         this.mainStudent = mainStudent;
         this.sortBy = "Default";
         this.context = context;
+        idStudentMap = new HashMap<String,Student>();
+        idSharedMap = new HashMap<String,SharedClasses>();
     }
 
     @NonNull
@@ -100,15 +105,23 @@ public class BOFStudentListAdapter extends RecyclerView.Adapter<BOFStudentListAd
 
     public void addNewStudent(SharedClasses sh) {
         Log.i("BOFStudentListAdapter", "adding new student");
-        if(students.contains(sh.getOtherStudent())) {
+        String id = sh.getOtherStudent().getID();
+        if (idStudentMap.containsKey(id)) {
             Log.i("BOFStudentListAdapter", "new student exists");
-            return;
+            students.remove(idStudentMap.get(id));
+            sharedClassesList.remove(idSharedMap.get(id));
+            idStudentMap.remove(id);
+            idSharedMap.remove(id);
+            //addNewStudent(sh);
+            //return;
         }
         students.add(sh.getOtherStudent());
+        idStudentMap.put(id,sh.getOtherStudent());
         Log.i("BOFStudentListAdapter", "added to sh");
+        sharedClassesList.add(sh);
+        idSharedMap.put(id,sh);
         switch(sortBy) {
             case "Default":
-                sharedClassesList.add(sh);
                 Collections.sort(sharedClassesList);
                 Collections.reverse(sharedClassesList);
                 break;
@@ -119,7 +132,8 @@ public class BOFStudentListAdapter extends RecyclerView.Adapter<BOFStudentListAd
                 sharedClassesList = SortRecentClasses.sortByRecent(students, mainStudent);
                 break;
         }
-        this.notifyItemInserted(sharedClassesList.indexOf(sh));
+        //this.notifyItemInserted(sharedClassesList.indexOf(sh));
+        this.notifyDataSetChanged();
         SessionSaver.updateCurrentSession(context, sharedClassesList);
     }
 
