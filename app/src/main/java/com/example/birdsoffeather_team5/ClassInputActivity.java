@@ -46,6 +46,7 @@ public class ClassInputActivity extends AppCompatActivity {
         categories.add("SSS");
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
+        Log.d("create ArrayAdapter","use to set dropdownviewresource for data");
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         session_spinner.setAdapter(dataAdapter);
 
@@ -58,6 +59,7 @@ public class ClassInputActivity extends AppCompatActivity {
         sizeCategories.add("Gigantic");
 
         ArrayAdapter<String> sizeDataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, sizeCategories);
+        Log.d("create another ArrayAdapter","use to set dropdownviewresource for size");
         sizeDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         size_spinner.setAdapter(sizeDataAdapter);
 
@@ -85,28 +87,33 @@ public class ClassInputActivity extends AppCompatActivity {
 
     // returns true if year is valid (any int from 1900 to 2100)
     private boolean isValidYear(int year){
+        Log.d("checking valid year","(year >= 1900) && (year <= 2100)");
         return (year >= 1900) &&
                 (year <= 2100);
     }
 
     // returns true if session is valid (session is chosen from a dropdown, so any non-null value is valid)
     private boolean isValidSession(String session){
+        Log.d("checking valid session","session != null");
         return session != null;
     }
 
     // returns true if subject is valid (subjects are 2-4 capital letters)
     private boolean isValidSubject(String subject){
+        Log.d("checking valid subject","subject != null && Pattern.matches([A-Z]{2,4}, subject)");
         return subject != null &&
                 Pattern.matches("[A-Z]{2,4}", subject);
     }
 
     // returns true if course number is valid (course nums are 1-3 digits and 0-3 capital letters)
     private boolean isValidCourseNum(String courseNum){
+        Log.d("checking valid course num","courseNum != null && Pattern.matches(d{1,3}[A-Z]{0,3}, courseNum);");
         return courseNum != null &&
                 Pattern.matches("\\d{1,3}[A-Z]{0,3}", courseNum);
     }
 
     private boolean isValidClassSize(String classSize) {
+        Log.d("checking valid class size","classSize != null");
         return classSize != null;
     }
 
@@ -120,6 +127,7 @@ public class ClassInputActivity extends AppCompatActivity {
             return;
         }
         int year = Integer.parseInt(yearText);
+        Log.d("checking if valid year","return if false");
         if(!isValidYear(year)) {
             //add alert
             return;
@@ -128,6 +136,7 @@ public class ClassInputActivity extends AppCompatActivity {
         //get session?
         Spinner sessionView = findViewById(R.id.session_spinner);
         String session = sessionView.getSelectedItem().toString();
+        Log.d("checking if valid session","return if false");
         if(!isValidSession(session)) {
             //alert
             return;
@@ -136,6 +145,7 @@ public class ClassInputActivity extends AppCompatActivity {
         //get subject
         TextView subjectView = findViewById(R.id.subject_input);
         String subject = subjectView.getText().toString();
+        Log.d("checking if valid course subject","return if false");
         if(!isValidSubject(subject)) {
             //alert
             return;
@@ -144,6 +154,7 @@ public class ClassInputActivity extends AppCompatActivity {
         //get course number
         TextView cnView = findViewById(R.id.course_number_input);
         String courseNum = cnView.getText().toString();
+        Log.d("checking if valid course num","return if false");
         if(!isValidCourseNum(courseNum)) {
             //alert
             return;
@@ -151,6 +162,7 @@ public class ClassInputActivity extends AppCompatActivity {
 
         Spinner sizeView = findViewById(R.id.size_spinner);
         String size = sizeView.getSelectedItem().toString();
+        Log.d("checking if valid class size","return if false");
         if(!isValidClassSize(size)) {
             return;
         }
@@ -164,6 +176,7 @@ public class ClassInputActivity extends AppCompatActivity {
 
     //add to a utilities class
     public static Optional<Integer> parseCount(String str) {
+        Log.d("creating parse count","to be added to utilities class");
         try {
             int maxCount = Integer.parseInt(str);
             return Optional.of(maxCount);
@@ -186,6 +199,7 @@ public class ClassInputActivity extends AppCompatActivity {
         edit.apply();
         Log.i("ClassInputActivity", mainUser);
         Intent intent = new Intent(ClassInputActivity.this, MainActivity.class);
+        Log.d("creating intent","used to start activity");
         ClassInputActivity.this.startActivity(intent);
     }
 }
