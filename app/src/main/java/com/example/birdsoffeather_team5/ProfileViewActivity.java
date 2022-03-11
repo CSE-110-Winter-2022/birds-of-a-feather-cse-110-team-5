@@ -110,5 +110,12 @@ public class ProfileViewActivity extends AppCompatActivity {
 
         //add the viewed student's id to the main student's wave list
         mainStudent.getWaves().add(student.getID());
+
+        //write data
+        Gson gson2 = new Gson();
+        String json = gson2.toJson(mainStudent);
+        SharedPreferences.Editor spe = mainStudentPref.edit();
+        spe.putString("studentObject", json);
+        spe.apply();
     }
 }

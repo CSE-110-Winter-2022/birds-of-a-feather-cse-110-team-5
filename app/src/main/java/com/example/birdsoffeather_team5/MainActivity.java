@@ -53,14 +53,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SharedPreferences mainStudentPref = getSharedPreferences("mainStudent", MODE_PRIVATE);
-        gson = new GsonBuilder()
-                .registerTypeAdapter(ClassData.class, new Deserializers.ClassDataDeserializer())
-                .create();
-        mainStudentStr = mainStudentPref.getString("studentObject", "");
-        Log.i("MainActivity", "mainStudentSTR: " + mainStudentStr);
-        mainStudent = gson.fromJson(mainStudentStr, BOFStudent.class);
-        Log.i("MainActivity", "mainStudent made" + mainStudent.getClassData().toString());
+        updateMainStudent();
 
         //call other activities before this one
         List<Student> students = new ArrayList<>();
@@ -102,6 +95,29 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             }
         };
         messageListener = new MockMessageListener(realListener, this);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        updateMainStudent();
+        Button buttonText = findViewById(R.id.start_btn);
+        String startStop = buttonText.getText().toString();
+        if(startStop.equals("Stop")) {
+            Nearby.getMessagesClient(this).publish(new Message(mainStudentStr.getBytes(StandardCharsets.UTF_8)));
+            Nearby.getMessagesClient(this).subscribe(messageListener);
+        }
+    }
+
+    private void updateMainStudent() {
+        SharedPreferences mainStudentPref = getSharedPreferences("mainStudent", MODE_PRIVATE);
+        gson = new GsonBuilder()
+                .registerTypeAdapter(ClassData.class, new Deserializers.ClassDataDeserializer())
+                .create();
+        mainStudentStr = mainStudentPref.getString("studentObject", "");
+        Log.i("MainActivity", "mainStudentSTR: " + mainStudentStr);
+        mainStudent = gson.fromJson(mainStudentStr, BOFStudent.class);
+        Log.i("MainActivity", "mainStudent made" + mainStudent.getClassData().toString());
     }
 
     @Override
