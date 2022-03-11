@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private String mainStudentStr;
     private Gson gson;
 
-    private String[] items = new String[]{"Default", "By Most Recent", "By Small Class Size"};
+    private final String[] items = new String[]{"Default", "By Most Recent", "By Small Class Size"};
 
 
     @Override
@@ -73,6 +73,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
         dropdown.setAdapter(adapter);
         dropdown.setOnItemSelectedListener(this);
+
+        setUpSessionLoader();
 
         MessageListener realListener = new MessageListener() {
             @Override
@@ -168,30 +170,47 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             Nearby.getMessagesClient(this).publish(new Message(mainStudentStr.getBytes(StandardCharsets.UTF_8)));
             Nearby.getMessagesClient(this).subscribe(messageListener);
             buttonText.setText("Stop");
+            ((Spinner)findViewById(R.id.session_loader)).setVisibility(View.GONE);
+            studentListAdapter.clear();
 
             // This line will bring up the input textbox for sending in a faked other person
             // Just remove this line to stop faking input; Must remove before app put out to public
             messageListener.onFound(new Message("mock".getBytes(StandardCharsets.UTF_8)));
         } else {
             Log.i("MainActivity", "Query stopped");
+            Nearby.getMessagesClient(this).unpublish(new Message(mainStudentStr.getBytes(StandardCharsets.UTF_8)));
+            Nearby.getMessagesClient(this).unsubscribe(messageListener);
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             final EditText input = new EditText(this);
             input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
+            input.setHint("Enter Session Name...");
             builder.setView(input);
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     String sessionName = input.getText().toString();
                     SessionSaver.saveEntireSession(getApplicationContext(), sessionName, studentListAdapter.getSharedClassesList());
-                    //save list of sessions
+                    SessionSaver.writeToSessionNames(getApplicationContext(), sessionName);
+                    setUpSessionLoader();
                 }
             });
+            builder.show();
 
-            Nearby.getMessagesClient(this).unpublish(new Message(mainStudentStr.getBytes(StandardCharsets.UTF_8)));
-            Nearby.getMessagesClient(this).unsubscribe(messageListener);
             buttonText.setText("Start");
+            setUpSessionLoader();
         }
+    }
+
+    private void setUpSessionLoader() {
+        Spinner loaderDropdown = findViewById(R.id.session_loader);
+        List<String> sessionNames = SessionSaver.retrieveSessionNames(getApplicationContext());
+        sessionNames.add("Favorites");
+        sessionNames.add(0, "Current Session");
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, sessionNames);
+        loaderDropdown.setAdapter(adapter);
+        loaderDropdown.setOnItemSelectedListener(new SessionSelectedListener(studentListAdapter));
+        loaderDropdown.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -216,25 +235,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
                 studentListAdapter.setSort("SortByRecent");
 
-                /*
-                List<Student> studentLists = studentListAdapter.getBOFStudentList();
-                List<Student> tempStudentList = new ArrayList<Student>();
-                for(Student student: studentLists){
-                    tempStudentList.add(student);
-                }
-                studentListAdapter.clear();
-
-                studentListAdapter.notifyDataSetChanged();
-                //update studentListAdapter for sorting by Prioritize Recent
-                //get a list of BOFSharedClasses from sorting algorithm
-                List<SharedClasses> sharedClassesList = SortRecentClasses.sortByRecent(tempStudentList, mainStudent);
-                for (SharedClasses sharedClasses : sharedClassesList) {
-                    Log.i("shared classes", sharedClasses.toString());
-                    studentListAdapter.addStudent(sharedClasses);
-                }
-
-                */
-
                 break;
 
 
@@ -245,42 +245,46 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                         .show();
 
                 studentListAdapter.setSort("SortBySmall");
-                /*
 
-                List<Student> studentListsForSmall = studentListAdapter.getBOFStudentList();
-
-                List<Student> tempStudentListForSmall = new ArrayList<Student>();
-                for(Student student: studentListsForSmall){
-                    tempStudentListForSmall.add(student);
-                }
-
-                Log.i("studentList works", studentListsForSmall.toString());
-
-                Log.i("tempStudentList", tempStudentListForSmall.toString());
-
-                Log.i("cleared", "Student List Adapter is cleared");
-                studentListAdapter.clear();
-
-
-                Log.i("studentList works", studentListsForSmall.toString());
-
-                Log.i("tempStudentList", tempStudentListForSmall.toString());
-
-                Log.i("notifyDataSetChanged", "notifyDataSetChanged is working");
-                studentListAdapter.notifyDataSetChanged();
-                //update studentListAdapter for sorting by Prioritize Small Classes
-
-                List<SharedClasses> sharedClassesListBySmall = SortSmallClasses.sortBySmall(tempStudentListForSmall, mainStudent);
-                Log.i("shared classes", sharedClassesListBySmall.toString());
-
-                for (SharedClasses sharedClasses: sharedClassesListBySmall) {
-                    Log.i("shared classes", sharedClasses.toString());
-                    studentListAdapter.addStudent(sharedClasses);
-                }
-
-                 */
                 break;
         }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
+}
+
+class SessionSelectedListener implements AdapterView.OnItemSelectedListener {
+    BOFStudentListAdapter studentListAdapter;
+
+    public SessionSelectedListener(BOFStudentListAdapter studentListAdapter){
+        this.studentListAdapter = studentListAdapter;
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        String selected = adapterView.getSelectedItem().toString();
+
+        if(selected.equals("Favorites")) {
+            //retrieve favorites list
+            List<SharedClasses> sharedClasses = SessionSaver.getFavoriteStudents(adapterView.getContext());
+            //load it into the sladapter
+            studentListAdapter.loadSession(sharedClasses);
+        }
+        else if(selected.equals("Current Session")) {
+            List<SharedClasses> sharedClasses = SessionSaver.retrieveCurrentSession(adapterView.getContext());
+            //load it into the sladapter
+            studentListAdapter.loadSession(sharedClasses);
+        }
+        else {
+                //retrieve given session
+                List<SharedClasses> sharedClasses = SessionSaver.retrieveSession(adapterView.getContext(), selected);
+                //load it into the sladapter
+                studentListAdapter.loadSession(sharedClasses);
+        }
+
     }
 
     @Override
