@@ -58,9 +58,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 .registerTypeAdapter(ClassData.class, new Deserializers.ClassDataDeserializer())
                 .create();
         mainStudentStr = mainStudentPref.getString("studentObject", "");
-        Log.i("MainActivity", "mainStudentSTR: " + mainStudentStr);
+        Log.d("MainActivity", "mainStudentSTR: " + mainStudentStr);
         mainStudent = gson.fromJson(mainStudentStr, BOFStudent.class);
-        Log.i("MainActivity", "mainStudent made" + mainStudent.getClassData().toString());
+        Log.d("MainActivity", "mainStudent made" + mainStudent.getClassData().toString());
 
         //call other activities before this one
         List<Student> students = new ArrayList<>();
@@ -86,15 +86,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         MessageListener realListener = new MessageListener() {
             @Override
             public void onFound(@NonNull Message message) {
-                Log.i("MainActivity", "we found /a/ message");
+                Log.d("MainActivity", "we found /a/ message");
                 String messageStr = new String(message.getContent());
                 Log.d(TAG, "Found message: " + messageStr);
                 Student stu = gson.fromJson(messageStr, BOFStudent.class);
-                Log.i("MainActivity", "name: " + stu.getName() + " url: " + stu.getURL());
-                Log.i("MainActivity", stu.getClassData().toString());
+                Log.d("MainActivity", "name: " + stu.getName() + " url: " + stu.getURL());
+                Log.d("MainActivity", stu.getClassData().toString());
                 BOFSharedClasses withStu = new BOFSharedClasses(mainStudent, stu);
-                Log.i("MainActivity", "Created Shared with " + withStu.getOtherStudent().getName());
-                Log.i("MainActivity", "Sharing: " + withStu.getSharedClasses().toString());
+                Log.d("MainActivity", "Created Shared with " + withStu.getOtherStudent().getName());
+                Log.d("MainActivity", "Sharing: " + withStu.getSharedClasses().toString());
                 studentListAdapter.addNewStudent(withStu);
             }
 
@@ -108,8 +108,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     protected void onStop() {
-        Nearby.getMessagesClient(this).unpublish(new Message(mainStudentStr.getBytes(StandardCharsets.UTF_8)));
+
+        //here
+        Message message = new Message(mainStudentStr.getBytes(StandardCharsets.UTF_8));
+        Nearby.getMessagesClient(this).unpublish(message);
+        Log.d(this.getClass().getSimpleName(), new String(message.getContent()));
+
         Nearby.getMessagesClient(this).unsubscribe(messageListener);
+        Log.d(this.getClass().getSimpleName(), messageListener.toString());
         super.onStop();
     }
 
@@ -118,19 +124,34 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         String startStop = buttonText.getText().toString();
         if(startStop.equals("Start")) {
             Log.i("MainActivity", "Query started");
-            Nearby.getMessagesClient(this).publish(new Message(mainStudentStr.getBytes(StandardCharsets.UTF_8)));
+
+            //here
+            Message message = new Message(mainStudentStr.getBytes(StandardCharsets.UTF_8));
+            Nearby.getMessagesClient(this).publish(message);
+            Log.d(this.getClass().getSimpleName(), new String(message.getContent()));
+
             Nearby.getMessagesClient(this).subscribe(messageListener);
+            Log.d(this.getClass().getSimpleName(), messageListener.toString());
             buttonText.setText("Stop");
             ((Spinner)findViewById(R.id.session_loader)).setVisibility(View.GONE);
             studentListAdapter.clear();
 
             // This line will bring up the input textbox for sending in a faked other person
             // Just remove this line to stop faking input; Must remove before app put out to public
-            messageListener.onFound(new Message("mock".getBytes(StandardCharsets.UTF_8)));
+            Message holder = new Message("mock".getBytes(StandardCharsets.UTF_8));
+            messageListener.onFound(holder);
+            Log.d("Query started onFound method called", new String(holder.getContent()));
+
         } else {
             Log.i("MainActivity", "Query stopped");
-            Nearby.getMessagesClient(this).unpublish(new Message(mainStudentStr.getBytes(StandardCharsets.UTF_8)));
+
+            //here
+            Message message = new Message(mainStudentStr.getBytes(StandardCharsets.UTF_8));
+            Nearby.getMessagesClient(this).unpublish(message);
+            Log.d(this.getClass().getSimpleName(), new String(message.getContent()));
+
             Nearby.getMessagesClient(this).unsubscribe(messageListener);
+            Log.d(this.getClass().getSimpleName(), messageListener.toString());
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             final EditText input = new EditText(this);

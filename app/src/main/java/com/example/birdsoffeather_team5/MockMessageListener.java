@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class MockMessageListener extends MessageListener {
+    private static final String MOCKMESSAGELISTENER = "MockMessageListener";
     private final MessageListener messageListener;
     private Context context;
     private AlertDialog.Builder builder;
@@ -37,12 +38,14 @@ public class MockMessageListener extends MessageListener {
         if(new String(message.getContent()).equals("mock")) {
             createBuilder(this.context);
         } else {
+            Log.d(MOCKMESSAGELISTENER + " onFound called", new String(message.getContent()));
             this.messageListener.onFound(message);
         }
     }
 
     @Override
     public void onLost(@NonNull Message message) {
+        Log.d(MOCKMESSAGELISTENER + " onLost called", new String(message.getContent()));
         this.messageListener.onLost(message);
     }
 
@@ -55,6 +58,7 @@ public class MockMessageListener extends MessageListener {
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                Log.i("Save button onClick called", input.getText().toString());
                 userInput = input.getText().toString();
                 callOnFound();
                 createBuilder(place);
@@ -63,10 +67,10 @@ public class MockMessageListener extends MessageListener {
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                Log.i(MOCKMESSAGELISTENER, "cancel button clicked");
                 dialog.cancel();
             }
         });
-
         builder.show();
     }
 
@@ -81,12 +85,14 @@ public class MockMessageListener extends MessageListener {
 
             String messageStr = gson.toJson(stu);
             Message message = new Message(messageStr.getBytes(StandardCharsets.UTF_8));
+            Log.d("MessageListener onFound called", new String(message.getContent()));
             this.messageListener.onFound(message);
         }
     }
 
     public Student extractSingleUser(Scanner sc) {
 
+        Log.d("extractSingleUser called", "getting student");
         //get name
         String name = sc.nextLine(); name = name.substring(0, name.length() - 4);
         //get url
@@ -105,7 +111,7 @@ public class MockMessageListener extends MessageListener {
                     currClassSplit[4]);
             classes.add(c);
         }
-
+        Log.d("Checking classes size in extractSingleUser", String.valueOf(classes.size()));
         Student stu = new BOFStudent(name, url, classes);
         Log.i("Mock", "name: " + stu.getName() + " url: " + stu.getURL());
         Log.i("Mock", stu.getClassData().toString());
