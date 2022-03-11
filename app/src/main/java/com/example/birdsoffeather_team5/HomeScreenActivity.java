@@ -16,6 +16,7 @@ public class HomeScreenActivity extends AppCompatActivity {
         Log.i("HomeScreenActivity", "HomeScreenActivity created");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
+        Log.d("creating content view","create home screen");
         /*
         SharedPreferences name = getSharedPreferences("mainStudent", MODE_PRIVATE);
         SharedPreferences.Editor edit = name.edit();
@@ -25,6 +26,7 @@ public class HomeScreenActivity extends AppCompatActivity {
     public void onLaunchRunQueryClicked(View view) {
         Log.i("HomeScreenActivity", "HomeScreenActivity entered");
         SharedPreferences mainStudent = getSharedPreferences("mainStudent", MODE_PRIVATE);
+        Log.d("creating main student","used to start either home screen or activity");
         if(mainStudent.getString("check","").length() == 0){
             Intent intent = new Intent(HomeScreenActivity.this, UsernameActivity.class);
             HomeScreenActivity.this.startActivity(intent);

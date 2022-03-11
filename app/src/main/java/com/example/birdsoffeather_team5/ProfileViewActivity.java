@@ -29,6 +29,7 @@ public class ProfileViewActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_view);
+        Log.d("creating content view","create profile screen");
 
         /*
         SharedPreferences pref = getSharedPreferences("sharedClasses", MODE_PRIVATE);
@@ -62,7 +63,7 @@ public class ProfileViewActivity extends AppCompatActivity {
             bcd.add((BOFClassData)cd);
 
         BOFClassRecyclerView = findViewById(R.id.common_classes);
-
+        Log.d("getting common classes","to be displayed");
         BOFClassLayoutManager = new LinearLayoutManager(this);
         BOFClassRecyclerView.setLayoutManager(BOFClassLayoutManager);
 
