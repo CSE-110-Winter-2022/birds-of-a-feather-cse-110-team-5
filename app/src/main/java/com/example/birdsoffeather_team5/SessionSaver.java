@@ -22,6 +22,35 @@ public class SessionSaver {
         edit.apply();
     }
 
+    public static void writeToSessionNames(Context context, String sessionName) {
+        SharedPreferences pref = context.getSharedPreferences("allSavedNames", context.MODE_PRIVATE);
+        SharedPreferences.Editor edit = pref.edit();
+
+
+        List<String> allNames = retrieveSessionNames(context);
+        if (allNames.contains(sessionName)) {
+            return;
+        }
+        Gson gson = new Gson();
+        allNames.add(sessionName);
+        String allNamesStr = gson.toJson(allNames);
+        edit.putString("names", allNamesStr);
+        edit.apply();
+    }
+
+    public static List<String> retrieveSessionNames(Context context) {
+        SharedPreferences pref = context.getSharedPreferences("allSavedNames", context.MODE_PRIVATE);
+        String allNamesStr = pref.getString("names", "");
+        if(allNamesStr.equals("")) {
+            return new ArrayList<String>();
+        }
+
+        Gson gson = new Gson();
+        Type stringListType = new TypeToken<List<String>>() {}.getType();
+        List<String> allNames = gson.fromJson(allNamesStr, stringListType);
+        return allNames;
+    }
+
     public static void updateCurrentSession(Context context, List<SharedClasses> currSession) {
         saveEntireSession(context, "currentSession", currSession);
     }

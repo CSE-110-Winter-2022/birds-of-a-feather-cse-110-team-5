@@ -141,6 +141,20 @@ public class BOFStudentListAdapter extends RecyclerView.Adapter<BOFStudentListAd
         return this.sharedClassesList;
     }
 
+    public void clear() {
+        students.clear();
+        sharedClassesList.clear();
+        notifyDataSetChanged();
+        SessionSaver.updateCurrentSession(context, sharedClassesList);
+    }
+
+    public void loadSession(List<SharedClasses> toLoad) {
+        clear();
+        for(SharedClasses sc : toLoad) {
+            addNewStudent(sc);
+        }
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private final ImageView pic;
         private final TextView name;
