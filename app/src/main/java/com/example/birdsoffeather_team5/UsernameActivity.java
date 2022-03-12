@@ -16,6 +16,7 @@ public class UsernameActivity extends AppCompatActivity {
         Log.i("UsernameActivity", "UsernameActivity created");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_username);
+        Log.d("creating content view","create username screen");
     }
 
     public void onNextButtonClicked(View view) {
@@ -27,6 +28,7 @@ public class UsernameActivity extends AppCompatActivity {
         edit.putString("check", "done");
         edit.apply();
         Intent intent = new Intent(UsernameActivity.this, ImageURLActivity.class);
+        Log.d("creating intent","used to start activity");
         UsernameActivity.this.startActivity(intent);
     }
 }
