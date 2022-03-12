@@ -144,6 +144,8 @@ public class BOFStudentListAdapter extends RecyclerView.Adapter<BOFStudentListAd
     public void clear() {
         students.clear();
         sharedClassesList.clear();
+        idStudentMap.clear();
+        idSharedMap.clear();
         notifyDataSetChanged();
         SessionSaver.updateCurrentSession(context, sharedClassesList);
     }
