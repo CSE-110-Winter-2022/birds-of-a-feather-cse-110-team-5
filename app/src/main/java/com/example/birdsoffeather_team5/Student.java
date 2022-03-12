@@ -6,9 +6,12 @@ public interface Student {
     public String getName();
     public String getURL();
     public List<ClassData> getClassData();
+    public String getID();
+    public List<String> getWaves();
 
     public void setName(String n);
     public void setURL(String u);
     public void setClassData(List<ClassData> c);
-
+    public void setID(String i);
+    public void setWaves(List<String> w);
 }

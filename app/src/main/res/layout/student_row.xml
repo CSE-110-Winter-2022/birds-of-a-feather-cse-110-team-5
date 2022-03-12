@@ -38,4 +38,12 @@
         android:layout_gravity="right|center"
         android:translationX="-70sp"
         app:srcCompat="@android:drawable/btn_star_big_off" />
+
+    <ImageView
+        android:id="@+id/wave_icon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:translationX="260dp"
+        android:translationY="25dp"
+        app:srcCompat="@android:drawable/ic_menu_myplaces" />
 </FrameLayout>

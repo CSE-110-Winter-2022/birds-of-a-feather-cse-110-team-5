@@ -18,7 +18,9 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.regex.Pattern;
+import java.util.regex.Pattern;import android.provider.Settings.Secure;
+
+
 
 public class ClassInputActivity extends AppCompatActivity {
 
@@ -32,7 +34,7 @@ public class ClassInputActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_class_input);
         Spinner session_spinner = (Spinner) findViewById(R.id.session_spinner);
-        Spinner size_spinner = (Spinner) findViewById(R.id.size_spinner);
+        Spinner size_spinner = (Spinner) findViewById(R.id.class_size_spinner);
 
         main_user_classes = new ArrayList<>();
         //session_spinner.setOnItemSelectedListener(this);
@@ -160,7 +162,7 @@ public class ClassInputActivity extends AppCompatActivity {
             return;
         }
 
-        Spinner sizeView = findViewById(R.id.size_spinner);
+        Spinner sizeView = findViewById(R.id.class_size_spinner);
         String size = sizeView.getSelectedItem().toString();
         Log.d("checking if valid class size","return if false");
         if(!isValidClassSize(size)) {
@@ -191,7 +193,8 @@ public class ClassInputActivity extends AppCompatActivity {
         }
         SharedPreferences mainStudent = getSharedPreferences("mainStudent", MODE_PRIVATE);
         SharedPreferences.Editor edit = mainStudent.edit();
-        Student temp = new BOFStudent(mainStudent.getString("name", ""), mainStudent.getString("image", ""), main_user_classes);
+        Student temp = new BOFStudent(mainStudent.getString("name", ""), mainStudent.getString("image", ""), main_user_classes,"4b295157-ba31-4f9f-8401-5d85d9cf659a");
+        String android_id = Secure.getString(this.getContentResolver(), Secure.ANDROID_ID);
         //String mainUserClassString = temp.convertClassData();
         Gson gson = new Gson();
         String mainUser = gson.toJson(temp);
