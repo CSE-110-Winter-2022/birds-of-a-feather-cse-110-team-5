@@ -43,7 +43,7 @@ public class BDDScenario1Test {
     public ActivityTestRule<HomeScreenActivity> mActivityTestRule = new ActivityTestRule<>(HomeScreenActivity.class);
 
     @Test
-    public void bDDScenario1Test() {
+    public void BDDScenario1Test() {
         ViewInteraction materialButton = onView(
                 allOf(withId(R.id.home_screen_start), withText("Start"),
                         childAtPosition(
@@ -109,9 +109,19 @@ public class BDDScenario1Test {
                                         0),
                                 10),
                         isDisplayed()));
-        appCompatEditText2.perform(replaceText("CSE"), closeSoftKeyboard());
+        appCompatEditText2.perform(click());
 
         ViewInteraction appCompatEditText3 = onView(
+                allOf(withId(R.id.subject_input),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                10),
+                        isDisplayed()));
+        appCompatEditText3.perform(replaceText("CSE"), closeSoftKeyboard());
+
+        ViewInteraction appCompatEditText4 = onView(
                 allOf(withId(R.id.course_number_input),
                         childAtPosition(
                                 childAtPosition(
@@ -119,7 +129,7 @@ public class BDDScenario1Test {
                                         0),
                                 9),
                         isDisplayed()));
-        appCompatEditText3.perform(replaceText("110"), closeSoftKeyboard());
+        appCompatEditText4.perform(replaceText("110"), closeSoftKeyboard());
 
         ViewInteraction appCompatSpinner2 = onView(
                 allOf(withId(R.id.class_size_spinner),
@@ -176,17 +186,7 @@ public class BDDScenario1Test {
                                         0)),
                         0),
                         isDisplayed()));
-        editText.perform(longClick());
-
-        ViewInteraction linearLayout = onView(
-                allOf(withContentDescription("Paste"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.widget.RelativeLayout")),
-                                        1),
-                                0),
-                        isDisplayed()));
-        linearLayout.perform(click());
+        editText.perform(click());
 
         ViewInteraction editText2 = onView(
                 allOf(childAtPosition(
